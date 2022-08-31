@@ -9,7 +9,8 @@
     "test": "ng test"
   },
   "engines": {
-    "node": "14.18.1"
+    "node": "14.18.1",
+    "nmp": "6.14.15"
   },
   "private": true,
   "dependencies": {
