@@ -28,15 +28,15 @@ export class CountryDataSource extends DataSource<CountryItem> {
   data: CountryItem[] = EXAMPLE_DATA;
   paginator: MatPaginator | undefined;
   sort: MatSort | undefined;
-  url:string = "http://localhost:8080/api/v1/country/list"
+  url:string = "http://80.49.44.11:8080/api/v1/country/list"
 
   constructor(private http: HttpClient) {
     super();
-    this.http.put("localhost:8080/login","{\n" +
+    this.http.put("80.49.44.11:8080/login","{\n" +
       "    \"login\":\"Administrator\",\n" +
       "    \"password\":\"Administrator\"\n" +
       "}")
-    this.http.get<CountryItem>(this.url,{headers:{"Access-Control-Allow-Origin":"true"}}).subscribe(data=>this.data.push({
+    this.http.get<CountryItem>(this.url).subscribe(data=>this.data.push({
       gusMask: data.gusMask,
       name: data.name,
       postMask: data.postMask,
