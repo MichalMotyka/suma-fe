@@ -1,0 +1,26 @@
+<div class="container">
+  <div class="input-group flex-nowrap mb-3">
+    <span class="input-group-text" >Nazwa</span>
+    <input type="text" class="form-control" placeholder="Nazwa" aria-label="Username" aria-describedby="addon-wrapping">
+  </div>
+  <div class="input-group flex-nowrap mb-3">
+    <span class="input-group-text" >Pesel</span>
+    <input type="text" class="form-control" placeholder="Pesel" aria-label="Username" aria-describedby="addon-wrapping">
+    <span class="input-group-text">NIP</span>
+    <input type="text" class="form-control" placeholder="NIP" aria-label="Username" aria-describedby="addon-wrapping">
+  </div>
+  <div class="input-group flex-nowrap mb-3" >
+    <span class="input-group-text me-5">
+      <span class="me-2">Prosument</span>
+      <mat-checkbox></mat-checkbox>
+    </span>
+    <span class="input-group-text">Saldo</span>
+    <input type="text" class="form-control text-end " placeholder="0.00" aria-label="Username" disabled="true" aria-describedby="addon-wrapping">
+
+  </div>
+</div>
+
+
+
+<button class="btn btn-success m-3" mat-dialog-close="kontrahent-form">Zatwierdź</button>
+<button class="btn btn-danger m-3" mat-dialog-close="kontrahent-form">Anuluj</button>

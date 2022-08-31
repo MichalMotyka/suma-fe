@@ -1,0 +1,12 @@
+<mat-nav-list>
+  <div id="container" class="mt-3 mb-3">
+    <div id="name" class="noselect">A</div>
+  </div>
+  <div class="text-center mb-2 noselect"><b>Username</b> <br> Admin</div>
+  <div class="text-center mb-5 noselect"><b>Role</b> <br> Admin</div>
+</mat-nav-list>
+<mat-nav-list *ngFor="let element of elements">
+  <a mat-list-item (click)="runModule(element.name)">
+    <label [textContent]="element.name" class="m-auto text-center noselect"></label>
+  </a>
+</mat-nav-list>

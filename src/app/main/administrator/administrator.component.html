@@ -1,0 +1,5 @@
+<mat-nav-list *ngFor="let element of moduleElements">
+  <a mat-list-item mat-dialog-close="administrator" (click)="runModule(element)">
+    <label [textContent]="element.name"  class="m-auto text-center noselect" style="min-width: 150px;"></label>
+  </a>
+</mat-nav-list>
