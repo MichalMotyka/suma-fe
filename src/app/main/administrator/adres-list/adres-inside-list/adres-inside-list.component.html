@@ -10,33 +10,39 @@
   <table mat-table class="full-width-table" [dataSource]="dataSource" matSort aria-label="Elements">
     <!-- Id Column -->
     <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
-      <td mat-cell *matCellDef="let row" (click)="getRow(row)">{{row.id}}</td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
+      <td mat-cell *matCellDef="let row">{{row.id}}</td>
     </ng-container>
 
     <!-- Name Column -->
     <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Województwo</th>
-      <td mat-cell *matCellDef="let row" (click)="getRow(row)">{{row.name}}</td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+      <td mat-cell *matCellDef="let row">{{row.name}}</td>
     </ng-container>
 
-    <ng-container matColumnDef="GUS">
+    <ng-container matColumnDef="gus">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>GUS</th>
-      <td mat-cell *matCellDef="let row" (click)="getRow(row)">{{row.gus}}</td>
+      <td mat-cell *matCellDef="let row">{{row.gus}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="typ">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Typ</th>
+      <td mat-cell *matCellDef="let row">{{row.type}}</td>
     </ng-container>
 
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
       <td mat-cell *matCellDef="let row">
-        <button class="btn btn-close me-5" *ngIf="row.active != 'N'" (click)="remove(row)"></button>
+        <button class="btn btn-close me-3" *ngIf="row.active != 'N'" (click)="remove(row)"></button>
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16" (click)="view(row)">
           <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
           <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
         </svg>
       </td>
     </ng-container>
+
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;" [ngStyle]="{'background':row.active === 'N' ? '#808080':'#FFF'}" ></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" [ngStyle]="{'background':row.active === 'N' ? '#808080':'#FFF'}"></tr>
   </table>
 
   <mat-paginator #paginator
@@ -47,3 +53,4 @@
       aria-label="Select page">
   </mat-paginator>
 </div>
+<button class="btn btn-danger mt-3" (click)="close()">Zamknij</button>

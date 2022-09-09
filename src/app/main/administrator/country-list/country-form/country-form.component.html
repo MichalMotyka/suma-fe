@@ -1,18 +1,22 @@
 <div class="input-group flex-nowrap mb-3">
-  <span class="input-group-text" >Kraj</span>
-  <input type="text" class="form-control" placeholder="Nazwa" aria-label="Username" aria-describedby="addon-wrapping">
+  <span class="input-group-text">Kraj</span>
+  <input type="text" class="form-control" placeholder="Nazwa" aria-label="Username" aria-describedby="addon-wrapping"
+         [(ngModel)]="name" [disabled]="viewMode" >
 </div>
 <div class="input-group flex-nowrap mb-3">
-  <span class="input-group-text" >Prefix</span>
-  <input type="text" class="form-control" placeholder="Prefix" aria-label="Username" aria-describedby="addon-wrapping" [maxLength]="3" [minLength]="2">
+  <span class="input-group-text">Prefix</span>
+  <input type="text" class="form-control" placeholder="Prefix" aria-label="Username" aria-describedby="addon-wrapping"
+         [disabled]="viewMode" [maxLength]="3" [minLength]="2" [(ngModel)]="prefix">
 </div>
 <div class="input-group flex-nowrap mb-3">
-  <span class="input-group-text" >Maska Kodu</span>
-  <input type="text" class="form-control" placeholder="00-000" aria-label="Username" aria-describedby="addon-wrapping">
+  <span class="input-group-text">Maska Kodu</span>
+  <input type="text" class="form-control" placeholder="00-000" aria-label="Username" aria-describedby="addon-wrapping"
+         [(ngModel)]="postMask" [disabled]="viewMode">
 </div>
 <div class="input-group flex-nowrap mb-3">
-  <span class="input-group-text" >Maska GUS</span>
-  <input type="text" class="form-control" placeholder="00000000000" aria-label="Username" aria-describedby="addon-wrapping">
+  <span class="input-group-text">Maska GUS</span>
+  <input type="text" class="form-control" placeholder="00000000000" aria-label="Username"
+         aria-describedby="addon-wrapping" [(ngModel)]="gusMask" [disabled]="viewMode">
 </div>
-<button class="btn btn-success me-3" [mat-dialog-close]="this">Zatwierdź</button>
+<button class="btn btn-success me-3" (click)="save()" [hidden]="viewMode">Zatwierdź</button>
 <button class="btn btn-danger" [matDialogClose]="this">Anuluj</button>

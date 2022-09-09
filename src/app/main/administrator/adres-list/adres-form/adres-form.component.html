@@ -1,0 +1,16 @@
+<div class="input-group flex-nowrap mb-3">
+  <span class="input-group-text">Województwo</span>
+  <input type="text" class="form-control" placeholder="Województwo" [disabled]="viewMode" [(ngModel)]="name" aria-label="Username" aria-describedby="addon-wrapping">
+</div>
+<div class="input-group flex-nowrap mb-3">
+  <span class="input-group-text">GUS</span>
+  <input type="text" class="form-control" placeholder="GUS" aria-label="Username" [disabled]="viewMode" [(ngModel)]="GUS" aria-describedby="addon-wrapping">
+</div>
+<div class="input-group flex-nowrap mb-3">
+  <span class="input-group-text">Kraj</span>
+  <input type="text" class="form-control" placeholder="Kraj" aria-label="Username" [disabled]="viewMode" aria-describedby="addon-wrapping">
+</div>
+<button class="btn btn-success me-3" [hidden]="viewMode" (click)="create()">Zatwierdź</button>
+<button class="btn btn-danger" [matDialogClose]="this">Anuluj</button>
+
+

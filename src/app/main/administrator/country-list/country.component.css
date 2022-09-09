@@ -1,3 +1,7 @@
 .full-width-table {
   width: 100%;
 }
+.row-selector:hover{
+  background:gainsboro;
+  cursor: pointer;
+}

@@ -3,45 +3,49 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { map } from 'rxjs/operators';
 import { Observable, of as observableOf, merge } from 'rxjs';
-import {HttpClient} from "@angular/common/http";
-import {Injectable} from "@angular/core";
 
 // TODO: Replace this with your own data model type
-export interface CountryItem {
-  id: number;
+export interface AdresInsideListItem {
   name: string;
-  prefix:string;
-  postMask:string;
-  gusMask:string;
+  id: number;
 }
 
 // TODO: replace this with real data from your application
-let EXAMPLE_DATA: CountryItem[] = [];
+const EXAMPLE_DATA: AdresInsideListItem[] = [
+  {id: 1, name: 'Hydrogen'},
+  {id: 2, name: 'Helium'},
+  {id: 3, name: 'Lithium'},
+  {id: 4, name: 'Beryllium'},
+  {id: 5, name: 'Boron'},
+  {id: 6, name: 'Carbon'},
+  {id: 7, name: 'Nitrogen'},
+  {id: 8, name: 'Oxygen'},
+  {id: 9, name: 'Fluorine'},
+  {id: 10, name: 'Neon'},
+  {id: 11, name: 'Sodium'},
+  {id: 12, name: 'Magnesium'},
+  {id: 13, name: 'Aluminum'},
+  {id: 14, name: 'Silicon'},
+  {id: 15, name: 'Phosphorus'},
+  {id: 16, name: 'Sulfur'},
+  {id: 17, name: 'Chlorine'},
+  {id: 18, name: 'Argon'},
+  {id: 19, name: 'Potassium'},
+  {id: 20, name: 'Calcium'},
+];
 
 /**
- * Data source for the Country view. This class should
+ * Data source for the AdresInsideList view. This class should
  * encapsulate all logic for fetching and manipulating the displayed data
  * (including sorting, pagination, and filtering).
  */
-@Injectable()
-export class CountryDataSource extends DataSource<CountryItem> {
-  data: CountryItem[] = EXAMPLE_DATA;
+export class AdresInsideListDataSource extends DataSource<AdresInsideListItem> {
+  data: AdresInsideListItem[] = EXAMPLE_DATA;
   paginator: MatPaginator | undefined;
   sort: MatSort | undefined;
-  url:string = "http://80.49.44.11:8080/api/v1/country/list"
 
-  constructor(private http: HttpClient) {
+  constructor() {
     super();
-    this.http.put("80.49.44.11:8080/login","{\n" +
-      "    \"login\":\"Administrator\",\n" +
-      "    \"password\":\"Administrator\"\n" +
-      "}")
-    this.http.get<CountryItem>(this.url).subscribe(data=>this.data.push({
-      gusMask: data.gusMask,
-      name: data.name,
-      postMask: data.postMask,
-      prefix: data.prefix,
-      id: data.id}))
   }
 
   /**
@@ -49,7 +53,7 @@ export class CountryDataSource extends DataSource<CountryItem> {
    * the returned stream emits new items.
    * @returns A stream of the items to be rendered.
    */
-  connect(): Observable<CountryItem[]> {
+  connect(): Observable<AdresInsideListItem[]> {
     if (this.paginator && this.sort) {
       // Combine everything that affects the rendered data into one update
       // stream for the data-table to consume.
@@ -72,7 +76,7 @@ export class CountryDataSource extends DataSource<CountryItem> {
    * Paginate the data (client-side). If you're using server-side pagination,
    * this would be replaced by requesting the appropriate data from the server.
    */
-  private getPagedData(data: CountryItem[]): CountryItem[] {
+  private getPagedData(data: AdresInsideListItem[]): AdresInsideListItem[] {
     if (this.paginator) {
       const startIndex = this.paginator.pageIndex * this.paginator.pageSize;
       return data.splice(startIndex, this.paginator.pageSize);
@@ -85,7 +89,7 @@ export class CountryDataSource extends DataSource<CountryItem> {
    * Sort the data (client-side). If you're using server-side sorting,
    * this would be replaced by requesting the appropriate data from the server.
    */
-  private getSortedData(data: CountryItem[]): CountryItem[] {
+  private getSortedData(data: AdresInsideListItem[]): AdresInsideListItem[] {
     if (!this.sort || !this.sort.active || this.sort.direction === '') {
       return data;
     }

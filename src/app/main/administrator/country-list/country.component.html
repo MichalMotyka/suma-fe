@@ -1,20 +1,42 @@
 <app-utils [module]="formModule"></app-utils>
 <div class="mat-elevation-z8">
-  <table mat-table class="full-width-table" matSort aria-label="Elements">
+  <table mat-table [dataSource]="dataSource" class="full-width-table" matSort aria-label="Elements">
     <!-- Id Column -->
     <ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
-      <td mat-cell *matCellDef="let row">{{row.id}}</td>
+      <td mat-cell *matCellDef="let row" (click)="getRow(row)" >{{row.id}}</td>
     </ng-container>
 
     <!-- Name Column -->
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Kraj</th>
-      <td mat-cell *matCellDef="let row">{{row.name}}</td>
+      <td mat-cell *matCellDef="let row" (click)="getRow(row)">{{row.name}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="prefix">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Prefix</th>
+      <td mat-cell *matCellDef="let row" (click)="getRow(row)">{{row.prefix}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="postMask">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Maska Poczty</th>
+      <td mat-cell *matCellDef="let row" (click)="getRow(row)">{{row.postMask}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="gusMask">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Maska Gus</th>
+      <td mat-cell *matCellDef="let row" (click)="getRow(row)">{{row.gusMask}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let row">
+        <button class="btn btn-close" *ngIf="row.active != 'N'" (click)="remove(row)"></button>
+      </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="getRow(row)"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" [ngStyle]="{'background':row.active === 'N' ? '#808080':'#FFF'}" class="row-selector"></tr>
   </table>
 
   <mat-paginator #paginator

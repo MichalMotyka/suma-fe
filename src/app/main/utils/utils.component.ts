@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {MatDialog} from "@angular/material/dialog";
+import {CountryComponent} from "../administrator/country-list/country.component";
 import {KontrahentTableComponent} from "../kontrahent-table/kontrahent-table.component";
 
 @Component({
@@ -16,6 +17,6 @@ export class UtilsComponent implements OnInit {
   }
 
   add() {
-    this.dialogRef.open(this.module)
+    this.dialogRef.open(this.module,{data:{viewMode:false,row:this.module}})
   }
 }

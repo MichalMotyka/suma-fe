@@ -29,6 +29,10 @@ import { CountryComponent } from './main/administrator/country-list/country.comp
 import { UtilsComponent } from './main/utils/utils.component';
 import { CountryFormComponent } from './main/administrator/country-list/country-form/country-form.component';
 import { AdresFormComponent } from './main/administrator/adres-list/adres-form/adres-form.component';
+import {ToastrModule} from "ngx-toastr";
+import { AdresRemoveComponent } from './main/administrator/adres-list/adres-remove/adres-remove.component';
+import { AdresInsideListComponent } from './main/administrator/adres-list/adres-inside-list/adres-inside-list.component';
+import { AdresFormCityComponent } from './main/administrator/adres-list/adres-form-city/adres-form-city.component';
 
 
 @NgModule({
@@ -46,7 +50,10 @@ import { AdresFormComponent } from './main/administrator/adres-list/adres-form/a
     CountryComponent,
     UtilsComponent,
     CountryFormComponent,
-    AdresFormComponent
+    AdresFormComponent,
+    AdresRemoveComponent,
+    AdresInsideListComponent,
+    AdresFormCityComponent
   ],
     imports: [
         BrowserModule,
@@ -64,7 +71,8 @@ import { AdresFormComponent } from './main/administrator/adres-list/adres-form/a
         MatTableModule,
         MatPaginatorModule,
         MatSortModule,
-        MatCheckboxModule
+        MatCheckboxModule,
+      ToastrModule.forRoot()
     ],
   providers: [],
   bootstrap: [AppComponent]
