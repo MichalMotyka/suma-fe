@@ -33,6 +33,9 @@ import {ToastrModule} from "ngx-toastr";
 import { AdresRemoveComponent } from './main/administrator/adres-list/adres-remove/adres-remove.component';
 import { AdresInsideListComponent } from './main/administrator/adres-list/adres-inside-list/adres-inside-list.component';
 import { AdresFormCityComponent } from './main/administrator/adres-list/adres-form-city/adres-form-city.component';
+import { AdresInsideFormComponent } from './main/administrator/adres-list/adres-inside-list/adres-inside-form/adres-inside-form.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { KontrahentConfirmComponent } from './main/kontrahent-table/kontrahent-confirm/kontrahent-confirm.component';
 
 
 @NgModule({
@@ -53,7 +56,9 @@ import { AdresFormCityComponent } from './main/administrator/adres-list/adres-fo
     AdresFormComponent,
     AdresRemoveComponent,
     AdresInsideListComponent,
-    AdresFormCityComponent
+    AdresFormCityComponent,
+    AdresInsideFormComponent,
+    KontrahentConfirmComponent
   ],
     imports: [
         BrowserModule,
@@ -72,7 +77,8 @@ import { AdresFormCityComponent } from './main/administrator/adres-list/adres-fo
         MatPaginatorModule,
         MatSortModule,
         MatCheckboxModule,
-      ToastrModule.forRoot()
+      ToastrModule.forRoot(),
+      NgbModule
     ],
   providers: [],
   bootstrap: [AppComponent]

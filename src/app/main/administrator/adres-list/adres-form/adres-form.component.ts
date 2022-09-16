@@ -27,7 +27,7 @@ export class AdresFormComponent implements OnInit {
   }
 
   create() {
-    this.service.createState(new Adres(0,this.name,this.GUS,"województwo","T")).subscribe(value => {
+    this.service.createState(new Adres(0,this.name,this.GUS,"województwo","T","","")).subscribe(value => {
       if(value.status == 201){
         this.toaster.success("Pomyslnie dodano województwo do słownika","Sukces",{
           timeOut: 3000,

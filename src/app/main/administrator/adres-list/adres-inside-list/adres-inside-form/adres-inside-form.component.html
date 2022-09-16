@@ -1,0 +1,22 @@
+<div class="input-group flex-nowrap mb-3">
+  <span class="input-group-text">Nazwa</span>
+  <input type="text" class="form-control" placeholder="Nazwa" aria-label="Username" [(ngModel)]="name" [disabled]="viewMode" aria-describedby="addon-wrapping">
+</div>
+<div class="input-group flex-nowrap mb-3">
+  <span class="input-group-text">GUS</span>
+  <input type="text" class="form-control" placeholder="00000" aria-label="Username" [(ngModel)]="gus" [maxLength]="5" [disabled]="viewMode" [minLength]="5" aria-describedby="addon-wrapping">
+</div>
+<div class="input-group flex-nowrap mb-3">
+  <span class="input-group-text">Poczta</span>
+  <input type="text" class="form-control" placeholder="Poczta" aria-label="Username" [(ngModel)]="post" [disabled]="viewMode" aria-describedby="addon-wrapping">
+</div>
+<div class="input-group flex-nowrap mb-3">
+  <span class="input-group-text">Rodzaj</span>
+  <input type="text" class="form-control" placeholder="Poczta" aria-label="Username" [(ngModel)]="type" [disabled]="viewMode" aria-describedby="addon-wrapping">
+</div>
+<div class="input-group flex-nowrap mb-3">
+  <span class="input-group-text">Kod Pocztowy</span>
+  <input type="text" class="form-control" placeholder="00-000" [maxLength]="6"  [minLength]="5" [(ngModel)]="post_code" [disabled]="viewMode" aria-label="Username" aria-describedby="addon-wrapping">
+</div>
+<button class="btn btn-success me-3" (click)="create()">Zatwierdź</button>
+<button class="btn btn-danger" [matDialogClose]="this">Anuluj</button>

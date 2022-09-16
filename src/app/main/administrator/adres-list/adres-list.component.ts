@@ -50,7 +50,7 @@ export class AdresListComponent implements OnInit {
   }
 
   getRow(displayedColumns: Adres) {
-      this.dialog.open(AdresInsideListComponent,{disableClose:true,minWidth:500})
+      this.dialog.open(AdresInsideListComponent,{disableClose:true,minWidth:500,data:{adres:displayedColumns}})
   }
 
   remove(row:any) {

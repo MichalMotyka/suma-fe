@@ -1,13 +1,14 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Inject, OnInit, ViewChild} from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import {MatTable, MatTableDataSource} from '@angular/material/table';
 import { AdresInsideListDataSource, AdresInsideListItem } from './adres-inside-list-datasource';
 import {Adres, AdresService} from "../../../../service/adres/adres.service";
 import {Subscription} from "rxjs";
-import {MatDialog} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {AdresRemoveComponent} from "../adres-remove/adres-remove.component";
 import {AdresFormComponent} from "../adres-form/adres-form.component";
+import {AdresInsideFormComponent} from "./adres-inside-form/adres-inside-form.component";
 
 @Component({
   selector: 'app-adres-inside-list',
@@ -20,11 +21,12 @@ export class AdresInsideListComponent implements OnInit {
   @ViewChild(MatTable) table!: MatTable<AdresInsideListItem>;
   dataSource!: MatTableDataSource<Adres>;
 
-  /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['id', 'name','gus','typ','actions'];
   private subscribsion!: Subscription;
+  parentAdres:Adres;
 
-  constructor(private adres:AdresService,private dialogs:MatDialog) {
+  constructor(@Inject(MAT_DIALOG_DATA) data: {adres: any},private adres:AdresService,private dialogs:MatDialog) {
+    this.parentAdres = data.adres;
   }
 
 
@@ -33,7 +35,7 @@ export class AdresInsideListComponent implements OnInit {
   }
 
   addValue(){
-    this.subscribsion = this.adres.getAllAdres("3231").subscribe({
+    this.subscribsion = this.adres.getAllAdres(this.parentAdres.gus).subscribe({
         next: value => {
           this.dataSource = new MatTableDataSource(value.adresys);
           this.dataSource.sort = this.sort;
@@ -44,7 +46,7 @@ export class AdresInsideListComponent implements OnInit {
   }
 
   add() {
-
+    this.dialogs.open(AdresInsideFormComponent,{data:{adres:this.parentAdres,instance:this,viewMode:false}});
   }
 
   close() {
@@ -59,6 +61,6 @@ export class AdresInsideListComponent implements OnInit {
   }
 
   view(row:any) {
-    this.dialogs.open(AdresFormComponent,{data:{rows:row,viewMode:true}})
+    this.dialogs.open(AdresInsideFormComponent,{data:{rows:row,viewMode:true,adres:this.parentAdres}})
   }
 }

@@ -13,12 +13,17 @@ export class Adres {
   gus:string;
   type:string
   active:string;
-  constructor(id:number,name:string,GUS:string,type:string,active:string) {
+  post:string;
+  post_code:string;
+
+  constructor(id:number,name:string,GUS:string,type:string,active:string,post:string,post_code:string) {
   this.id = id;
   this.name = name;
   this.gus = GUS;
   this.type = type;
   this.active = active;
+  this.post = post;
+  this.post_code = post_code;
   }
 }
 
@@ -40,5 +45,11 @@ export class AdresService {
   }
   getAllAdres(gus:string){
     return this.http.get<Adresys>("http://localhost:8080/api/v1/adres/get_adres?gus="+gus);
+  }
+  getAllNoStateAdresys(){
+    return this.http.get<Adresys>("http://localhost:8080/api/v1/adres/get_all_no_state");
+  }
+  getAllNoStateAdresysHistoric(){
+    return this.http.get<Adresys>("http://localhost:8080/api/v1/adres/get_all_no_state/historic");
   }
 }
