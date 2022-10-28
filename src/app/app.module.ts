@@ -4,7 +4,7 @@ import { HttpClientModule} from "@angular/common/http";
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { MatDialogModule} from "@angular/material/dialog";
 import { InfoComponent } from './login/info/info.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -36,7 +36,28 @@ import { AdresFormCityComponent } from './main/administrator/adres-list/adres-fo
 import { AdresInsideFormComponent } from './main/administrator/adres-list/adres-inside-list/adres-inside-form/adres-inside-form.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { KontrahentConfirmComponent } from './main/kontrahent-table/kontrahent-confirm/kontrahent-confirm.component';
-
+import { ComponentComponent } from './main/component/component.component';
+import { ComponentFormComponent } from './main/component/component-form/component-form.component';
+import {MatSelectModule} from "@angular/material/select";
+import { ComponentConfirmComponent } from './main/component/component-confirm/component-confirm.component';
+import { TariffComponent } from './main/tariff/tariff.component';
+import { TariffFormComponent } from './main/tariff/tariff-form/tariff-form.component';
+import {DragDropModule} from "@angular/cdk/drag-drop";
+import { TariffConfirmComponent } from './main/tariff/tariff-confirm/tariff-confirm.component';
+import { PriceListComponent } from './main/price-list/price-list.component';
+import { FormComponent } from './main/price-list/form/form.component';
+import { PriceConfirmComponent } from './main/price-list/price-confirm/price-confirm.component';
+import { ContractComponent } from './main/contract/contract.component';
+import { ContractFormComponent } from './main/contract/contract-form/contract-form.component';
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MatInputModule} from "@angular/material/input";
+import {MatNativeDateModule} from "@angular/material/core";
+import { PpComponent } from './main/pp/pp.component';
+import { MeterListComponent } from './main/administrator/meter-list/meter-list.component';
+import { MeterFormComponent } from './main/administrator/meter-list/meter-form/meter-form.component';
+import { MeterConfirmComponent } from './main/administrator/meter-list/meter-confirm/meter-confirm.component';
+import { OtComponent } from './main/ot/ot.component';
+import { OtFormComponent } from './main/ot/ot-form/ot-form.component';
 
 @NgModule({
   declarations: [
@@ -58,29 +79,52 @@ import { KontrahentConfirmComponent } from './main/kontrahent-table/kontrahent-c
     AdresInsideListComponent,
     AdresFormCityComponent,
     AdresInsideFormComponent,
-    KontrahentConfirmComponent
+    KontrahentConfirmComponent,
+    ComponentComponent,
+    ComponentFormComponent,
+    ComponentConfirmComponent,
+    TariffComponent,
+    TariffFormComponent,
+    TariffConfirmComponent,
+    PriceListComponent,
+    FormComponent,
+    PriceConfirmComponent,
+    ContractComponent,
+    ContractFormComponent,
+    PpComponent,
+    MeterListComponent,
+    MeterFormComponent,
+    MeterConfirmComponent,
+    OtComponent,
+    OtFormComponent
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        HttpClientModule,
-        FormsModule,
-        MatDialogModule,
-        BrowserAnimationsModule,
-        LayoutModule,
-        MatToolbarModule,
-        MatButtonModule,
-        MatSidenavModule,
-        MatIconModule,
-        MatListModule,
-        MatTableModule,
-        MatPaginatorModule,
-        MatSortModule,
-        MatCheckboxModule,
-      ToastrModule.forRoot(),
-      NgbModule
-    ],
-  providers: [],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule,
+    MatDialogModule,
+    BrowserAnimationsModule,
+    LayoutModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatListModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatCheckboxModule,
+    ToastrModule.forRoot(),
+    NgbModule,
+    MatSelectModule,
+    ReactiveFormsModule,
+    DragDropModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatInputModule
+  ],
+  providers: [MatDatepickerModule],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

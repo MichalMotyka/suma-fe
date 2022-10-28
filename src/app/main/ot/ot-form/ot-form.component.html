@@ -1,0 +1,51 @@
+<div class="container">
+  <div class="input-group flex-nowrap mb-3">
+    <span class="input-group-text">Numer OT</span>
+    <input type="text" class="form-control" placeholder="000000000" aria-label="Username" [(ngModel)]="ot" [disabled]="true" aria-describedby="addon-wrapping">
+  </div>
+  <div class="input-group flex-nowrap mb-3">
+    <span class="input-group-text">PP</span>
+    <input class="typeahead-format" type="text" class="form-control" [(ngModel)]="ppModel" (ngModelChange)="loadPP()" [disabled]="false" [ngbTypeahead]="search"
+           [resultFormatter]="formatter"/>
+  </div>
+  <div class="input-group flex-nowrap mb-3">
+    <span class="input-group-text">Kontrahent</span>
+    <input type="text" class="form-control" placeholder="000000000" aria-label="Username" [(ngModel)]="contractor" [disabled]="true" aria-describedby="addon-wrapping">
+  </div>
+  <div class="input-group flex-nowrap mb-3">
+    <span class="input-group-text">Umowa</span>
+    <input type="text" class="form-control" placeholder="000000000" aria-label="Username" [(ngModel)]="contract" [disabled]="true" aria-describedby="addon-wrapping">
+  </div>
+  <div class="input-group flex-nowrap mb-3">
+    <span class="input-group-text">Numer licznika</span>
+    <input class="typeahead-format" type="text" class="form-control" [(ngModel)]="meter" [disabled]="!newMetter" [ngbTypeahead]="searchMetter"
+           [resultFormatter]="formatter"/>
+  </div>
+  <div class="input-group flex-nowrap mb-3" [hidden]="!replaceMetter">
+    <span class="input-group-text">Nowy licznik</span>
+    <input class="typeahead-format" type="text" class="form-control" [(ngModel)]="replacedMetter" [disabled]="false" [ngbTypeahead]="searchMetter"
+           [resultFormatter]="formatter"/>
+  </div>
+  <label class="mb-1">Data wykonania</label><br>
+  <mat-form-field appearance="fill">
+    <mat-label>Wybierz datę</mat-label>
+    <input matInput [matDatepicker]="picker" [(ngModel)]="data">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field><br>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Akcja</mat-label>
+    <mat-select (selectionChange)="setAction($event.value)">
+      <mat-option *ngFor="let actions of action" [value]="actions">
+        {{actions}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <br>
+  <div class="float-end">
+    <button [hidden]="viewMode" class="btn btn-success m-1" (click)="save()">Zatwierdź</button>
+    <button class="btn btn-danger m-1" mat-dialog-close="kontrahent-form">Anuluj</button>
+  </div>
+
+</div>

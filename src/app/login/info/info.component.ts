@@ -1,4 +1,6 @@
-import {Component, Input, OnInit, Output} from '@angular/core';
+import {Component, Inject, Input, OnInit, Output} from '@angular/core';
+import {MAT_DIALOG_DATA} from "@angular/material/dialog";
+import {Kontrahent} from "../../service/kontrahent.service";
 
 @Component({
   selector: 'app-info',
@@ -7,7 +9,9 @@ import {Component, Input, OnInit, Output} from '@angular/core';
 })
 export class InfoComponent implements OnInit {
   message: string = ''
-  constructor() { }
+  constructor(@Inject(MAT_DIALOG_DATA) data: {message:string}) {
+    this.message = data.message;
+  }
 
   ngOnInit(): void {
   }

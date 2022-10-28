@@ -1,0 +1,47 @@
+<div class="container">
+  <div class="input-group flex-nowrap mb-3">
+    <span class="input-group-text">Odbiorca</span>
+    <input class="typeahead-format" type="text" class="form-control" [(ngModel)]="numerKlienta" (ngModelChange)="setAdres()" [disabled]="viewMode" [ngbTypeahead]="search"
+           [resultFormatter]="formatter"/>
+  </div>
+  <div class="input-group flex-nowrap mb-3">
+    <span class="input-group-text">Adres</span>
+    <input type="text" class="form-control" placeholder="" aria-label="Username" [(ngModel)]="adres" [disabled]="true" aria-describedby="addon-wrapping">
+  </div>
+  <div class="input-group flex-nowrap mb-3">
+    <span class="input-group-text">Platnik</span>
+    <input class="typeahead-format" type="text" class="form-control" [(ngModel)]="numberPlatnika"  (ngModelChange)="validPayer()" [disabled]="viewMode" [ngbTypeahead]="payerSearch"
+           [resultFormatter]="formatter"/>
+  </div>
+  <label class="mb-1">Data rozpoczęcia umowy</label><br>
+  <mat-form-field appearance="fill">
+    <mat-label>Wybierz datę</mat-label>
+    <input matInput [matDatepicker]="picker" [(ngModel)]="data">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field><br>
+  <div class="input-group flex-nowrap mb-3">
+    <span class="input-group-text">Data zakończenia</span>
+    <input type="text" class="form-control" placeholder="" aria-label="Username" [(ngModel)]="endDate" [disabled]="true" aria-describedby="addon-wrapping">
+  </div>
+  <div class="input-group flex-nowrap mb-3">
+    <span class="input-group-text">Taryfa</span>
+    <input class="typeahead-format" type="text" class="form-control" [(ngModel)]="taryfa" (ngModelChange)="validTarif()" (change)="setPriceDic()" [disabled]="viewMode" [ngbTypeahead]="tarifSearch"
+           [resultFormatter]="formatter"/>
+  </div>
+  <div class="input-group flex-nowrap mb-3">
+    <span class="input-group-text">Cennik</span>
+    <input class="typeahead-format" type="text" class="form-control" [(ngModel)]="cennik" (ngModelChange)="validPrice()" [disabled]="viewMode" [ngbTypeahead]="priceSearch"
+           [resultFormatter]="formatter"/>
+  </div>
+  <div class="input-group flex-nowrap mb-3">
+    <span class="input-group-text">Fazowość</span>
+    <input class="typeahead-format" type="text" class="form-control" [(ngModel)]="fazowosc" [disabled]="viewMode" [ngbTypeahead]="fazSearch"
+           [resultFormatter]="formatter"/>
+  </div>
+  <div class="float-end">
+    <button [hidden]="viewMode" class="btn btn-success m-1" (click)="save()">Zatwierdź</button>
+    <button class="btn btn-danger m-1" mat-dialog-close="kontrahent-form">Anuluj</button>
+  </div>
+
+</div>

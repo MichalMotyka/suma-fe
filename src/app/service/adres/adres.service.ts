@@ -46,6 +46,9 @@ export class AdresService {
   getAllAdres(gus:string){
     return this.http.get<Adresys>("http://localhost:8080/api/v1/adres/get_adres?gus="+gus);
   }
+  getAdresById(id:number){
+    return this.http.get<Adres>("http://localhost:8080/api/v1/adres/get_by_id?id="+id);
+  }
   getAllNoStateAdresys(){
     return this.http.get<Adresys>("http://localhost:8080/api/v1/adres/get_all_no_state");
   }

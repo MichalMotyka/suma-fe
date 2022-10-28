@@ -16,7 +16,7 @@ class Elements {
   styleUrls: ['./administrator.component.css']
 })
 export class AdministratorComponent implements OnInit {
-  moduleElements: Elements[]=[new Elements("Adresy","adres_list"),new Elements("Kraje","country_list")];
+  moduleElements: Elements[]=[new Elements("Adresy","adres_list"),new Elements("Kraje","country_list"),new Elements("Liczniki","meter_list")];
 
   constructor(private router:Router) { }
 

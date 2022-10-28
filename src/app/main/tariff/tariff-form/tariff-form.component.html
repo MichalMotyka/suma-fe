@@ -1,0 +1,35 @@
+<div class="input-group flex-nowrap mb-3">
+  <span class="input-group-text">Nazwa</span>
+  <input type="text" class="form-control" placeholder="Nazwa" [disabled]="viewMode" [(ngModel)]="name" aria-label="Username" aria-describedby="addon-wrapping">
+</div>
+<div class="example-container">
+  <h2>Składniki</h2>
+  <div
+    cdkDropList
+    #todoList="cdkDropList"
+    [cdkDropListData]="todo"
+    [cdkDropListConnectedTo]="[doneList]"
+    class="example-list edit dialog-screen"
+    (cdkDropListDropped)="drop($event)">
+    <div class="example-box" *ngFor="let item of todo" cdkDrag>{{item}}</div>
+  </div>
+</div>
+
+<div class="example-container">
+  <h2>Wybrane</h2>
+  <div
+    cdkDropList
+    #doneList="cdkDropList"
+    [cdkDropListData]="done"
+    [cdkDropListConnectedTo]="[todoList]"
+    class="example-list edit dialog-screen"
+    (cdkDropListDropped)="drop($event)">
+    <div class="example-box" *ngFor="let item of done" cdkDrag>{{item}}</div>
+  </div>
+  <div class="d-flex flex-row-reverse">
+    <button class="btn btn-danger mt-2" [mat-dialog-close]>Anuluj</button>
+    <button class="btn btn-success me-2 mt-2" (click)="create()"  [hidden]="viewMode">Zapisz</button>
+  </div>
+
+</div>
+

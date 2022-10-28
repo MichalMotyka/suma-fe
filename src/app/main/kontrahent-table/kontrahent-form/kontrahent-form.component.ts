@@ -6,6 +6,7 @@ import {HttpClient} from "@angular/common/http";
 import {Kontrahent, KontrahentService} from "../../../service/kontrahent.service";
 import {ToastrService} from "ngx-toastr";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import {PP, PpeService} from "../../../ppe.service";
 
 @Component({
   selector: 'app-kontrahent-form',
@@ -24,33 +25,18 @@ export class KontrahentFormComponent implements OnInit {
   nazwa: any;
   saldo: any;
   ppe!:string
-   states:string[] = [];
-   dic:any [][] = []
+  states:string[] = [];
+  dic:any [][] = []
   viewMode!:boolean;
 
   formatter = (result: string) => result.toUpperCase();
 
-  constructor(@Inject(MAT_DIALOG_DATA) data: {row:Kontrahent,viewMode:boolean},private adresService:AdresService,private kontrahenService:KontrahentService,private toaster:ToastrService,private dialog:MatDialogRef<any>) {
+  constructor(@Inject(MAT_DIALOG_DATA) data: {row:Kontrahent,viewMode:boolean,editMode:boolean},private adresService:AdresService,private kontrahenService:KontrahentService,private toaster:ToastrService,private dialog:MatDialogRef<any>,private ppeService:PpeService) {
     this.viewMode =data.viewMode;
-    if(data.viewMode){
-      this.nazwa = data.row.nazwa;
-      this.nip = data.row.nip;
-      this.pesel = data.row.pesel;
-      this.numerKlienta = data.row.numerKlienta;
-      this.ulica = data.row.ulica;
-      this.ulicaKores = data.row.ulicaKores;
-      this.saldo = data.row.saldo;
-      adresService.getAllNoStateAdresysHistoric().subscribe(
-        value => {
-          value.adresys.forEach(adres=>{
-            this.states.push(adres.post+" "+adres.post_code+"; "+adres.name);
-            this.dic.push([adres.post+" "+adres.post_code+"; "+adres.name,adres.id])
-          })
-          this.dic.find(output=> output[1] == data.row.adres ? this.model = output[0] : "")
-          this.dic.find(output=> output[1] == data.row.adresKores ? this.concratorModel = output[0] : "")
-        })
-
-    }else{
+    if (data.viewMode || data.editMode){
+      this.mapper(data.row)
+    }
+    if (data.editMode || !data.viewMode){
       adresService.getAllNoStateAdresys().subscribe(
         value => {
           value.adresys.forEach(adres=>{
@@ -59,13 +45,34 @@ export class KontrahentFormComponent implements OnInit {
           })
         })
     }
-
-
   }
 
   ngOnInit(): void {
   }
 
+  mapper(data:Kontrahent){
+    this.adresService.getAdresById(data.adres).subscribe(
+      value => {
+        this.states.push(value.post+" "+value.post_code+"; "+value.name);
+        this.dic.push([value.post+" "+value.post_code+"; "+value.name,value.id])
+        this.model =value.post+" "+value.post_code+"; "+value.name;
+      })
+    this.adresService.getAdresById(data.adresKores).subscribe(
+      value => {
+        this.states.push(value.post+" "+value.post_code+"; "+value.name);
+        this.dic.push([value.post+" "+value.post_code+"; "+value.name,value.id])
+        this.concratorModel = value.post+" "+value.post_code+"; "+value.name;
+      })
+    this.nazwa = data.nazwa;
+    this.nip = data.nip;
+    this.pesel = data.pesel;
+    this.numerKlienta = data.numerKlienta;
+    this.ulica = data.ulica;
+    this.ulicaKores = data.ulicaKores;
+    this.saldo = data.saldo;
+
+
+  }
 
   save(){
     let adres:any;
@@ -77,6 +84,13 @@ export class KontrahentFormComponent implements OnInit {
         value => {
           if (value.status == 201){
             this.toaster.success("Pomyślnie utworzono kontrahenta","Sukces", {
+              timeOut: 3000,
+              progressBar: true,
+              progressAnimation: "decreasing"
+            })
+            this.dialog.close(this);
+          }else if(value.status == 200){
+            this.toaster.success("Pomyślnie zmieniono dane kontrahenta","Sukces", {
               timeOut: 3000,
               progressBar: true,
               progressAnimation: "decreasing"

@@ -1,0 +1,19 @@
+<div class="input-group flex-nowrap mb-3">
+  <span class="input-group-text">Nazwa</span>
+  <input type="text" class="form-control" placeholder="Nazwa" aria-label="Username" aria-describedby="addon-wrapping"
+         [(ngModel)]="name" [disabled]="viewMode" >
+</div>
+<div class="input-group flex-nowrap mb-3">
+  <span class="input-group-text">Id modelu</span>
+  <input type="text" class="form-control" placeholder="0000000" aria-label="Username" aria-describedby="addon-wrapping"
+         [(ngModel)]="model" [disabled]="viewMode" >
+</div>
+<div class="input-group flex-nowrap mb-3">
+  <span class="input-group-text">Fazowość</span>
+  <input class="typeahead-format" type="text" class="form-control" [(ngModel)]="fazowosc" [disabled]="viewMode" [ngbTypeahead]="fazSearch"
+         [resultFormatter]="formatter"/>
+</div>
+<div class="float-end">
+  <button class="btn btn-success me-3" (click)="save()" [hidden]="viewMode">Zatwierdź</button>
+  <button class="btn btn-danger" [matDialogClose]="this">Anuluj</button>
+</div>

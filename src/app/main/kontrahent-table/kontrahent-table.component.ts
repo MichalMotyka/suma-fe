@@ -50,6 +50,11 @@ export class KontrahentTableComponent implements OnInit {
   }
 
   view(row:any) {
-    this.dialog.open(KontrahentFormComponent,{data:{row:row,viewMode:true}})
+    this.dialog.open(KontrahentFormComponent,{data:{row:row,viewMode:true,editMode:false}})
   }
+
+  edit(row:any) {
+    this.dialog.open(KontrahentFormComponent,{data:{row:row,viewMode:false,editMode:true}})
+  }
+   //TODO Historia edycji
 }

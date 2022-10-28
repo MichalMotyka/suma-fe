@@ -2,7 +2,6 @@ import {AfterViewInit, Component, Inject, OnInit, ViewChild} from '@angular/core
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import {MatTable, MatTableDataSource} from '@angular/material/table';
-import { AdresInsideListDataSource, AdresInsideListItem } from './adres-inside-list-datasource';
 import {Adres, AdresService} from "../../../../service/adres/adres.service";
 import {Subscription} from "rxjs";
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
@@ -18,7 +17,7 @@ import {AdresInsideFormComponent} from "./adres-inside-form/adres-inside-form.co
 export class AdresInsideListComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-  @ViewChild(MatTable) table!: MatTable<AdresInsideListItem>;
+  @ViewChild(MatTable) table!: MatTable<Adres>;
   dataSource!: MatTableDataSource<Adres>;
 
   displayedColumns = ['id', 'name','gus','typ','actions'];
