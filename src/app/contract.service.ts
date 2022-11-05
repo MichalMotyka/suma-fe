@@ -3,6 +3,10 @@ import {HttpClient} from "@angular/common/http";
 import {environment} from "../environments/environment";
 import {CountryCreateResponse} from "./main/administrator/country-list/country-form/country-form.component";
 
+export interface ContractList{
+  contractList:ContractItem[];
+}
+
 export class ContractItem{
   constructor(public id:number,
               public uid:string,
@@ -31,5 +35,14 @@ export class ContractService {
   }
   getS1ByContractor(id:string){
     return this.http.get<ContractItem>(`${environment.url}/api/v1/contract/getByPP?id=`+id)
+  }
+  getAll(){
+    return this.http.get<ContractList>(`${environment.url}/api/v1/contract/getAll`)
+  }
+  deleteByUid(id:string){
+    return this.http.delete<CountryCreateResponse>(`${environment.url}/api/v1/contract/delete?id=`+id)
+  }
+  edit(body:ContractItem){
+    return this.http.put<CountryCreateResponse>(`${environment.url}/api/v1/contract/edit`,body)
   }
 }

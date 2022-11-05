@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {debounceTime, distinctUntilChanged, Observable, OperatorFunction} from "rxjs";
 import {map} from "rxjs/operators";
 import {Kontrahent, KontrahentService} from "../../../service/kontrahent.service";
 import {Tariff, TariffService} from "../../../tariff.service";
 import {Price, PriceService} from "../../../price.service";
 import {Adres, AdresService} from "../../../service/adres/adres.service";
-import {MatDialogRef} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {ContractItem, ContractService} from "../../../contract.service";
 import {logMessages} from "@angular-devkit/build-angular/src/builders/browser-esbuild/esbuild";
 
@@ -38,11 +38,46 @@ export class ContractFormComponent implements OnInit {
   AdresObj!:Adres;
   TarifObj!:Tariff;
   PriceObj!:Price;
-
-
+  id = 0;
+  uid!: string;
   formatter = (result: string) => result.toUpperCase();
-  constructor(private contractorServis:KontrahentService,private tarifService:TariffService,private priceService:PriceService,private adresService:AdresService,private dialog:MatDialogRef<any>,private contractorService:ContractService) {
+  ot!: number;
+  status!: string;
+  editMode:boolean = false;
+
+  constructor(@Inject(MAT_DIALOG_DATA) data: {row:ContractItem,viewMode:boolean,editMode:boolean},private contractorServis:KontrahentService,private tarifService:TariffService,private priceService:PriceService,private adresService:AdresService,private dialog:MatDialogRef<any>,private contractorService:ContractService) {
     dialog.disableClose = true;
+    if (data.viewMode || data.editMode){
+      this.id = data.row.id;
+      this.viewMode = data.viewMode
+      this.editMode = data.editMode;
+      this.data = data.row.roz;
+      this.endDate = data.row.endDate;
+      this.fazowosc = data.row.faza;
+      this.uid = data.row.uid;
+      this.ot = data.row.ot;
+      this.status = data.row.state
+      contractorServis.getById(String(data.row.payer)).subscribe(value => {
+        this.PayerObj = value;
+        this.numberPlatnika = value.nazwa+" ("+value.numerKlienta+")";
+      })
+      contractorServis.getById(String(data.row.contract)).subscribe(value => {
+        this.ContractorObj = value;
+        this.numerKlienta = value.nazwa+" ("+value.numerKlienta+")";
+      })
+      adresService.getAdresById(data.row.adres).subscribe(value => {
+        this.AdresObj = value;
+        this.adres = value.name +" "+ value.post +" "+ value.post_code
+      })
+      priceService.getById(data.row.price.toString()).subscribe(value => {
+        this.PriceObj = value;
+        this.cennik = value.name;
+      })
+      tarifService.getById(data.row.tarif).subscribe(value => {
+        this.TarifObj = value;
+        this.taryfa = value.name
+      })
+    }
   }
 
   ngOnInit(): void {
@@ -168,9 +203,26 @@ export class ContractFormComponent implements OnInit {
     })
   }
 
+  edit(){
+    this.contractorService.edit(new ContractItem(
+      this.id,
+      this.uid,
+      this.ContractorObj.id,
+      this.PayerObj.id,
+      this.AdresObj.id,
+      this.TarifObj.id,
+      this.PriceObj.id,
+      this.ot,
+      this.data,
+      this.endDate,
+      this.status,
+      this.fazowosc
+    )).subscribe()
+  }
+
   save() {
     this.contractorService.save(new ContractItem(
-      0,
+      this.id,
       "",
       this.ContractorObj.id,
       this.PayerObj.id,
@@ -182,6 +234,6 @@ export class ContractFormComponent implements OnInit {
       this.endDate,
       "",
       this.fazowosc
-      )).subscribe(value => console.log(value))
+      )).subscribe()
   }
 }

@@ -32,4 +32,7 @@ export class TariffService {
   drop(body:Tariff){
     return this.http.delete<CountryCreateResponse>(`${environment.url}/api/v1/tariff/delete?id=`+body.tarif_id)
   }
+  getById(id:number){
+    return this.http.get<Tariff>(`${environment.url}/api/v1/tariff/get?id=`+id)
+  }
 }

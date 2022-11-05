@@ -39,4 +39,7 @@ export class PriceService {
   delete(body:Price){
     return this.http.delete<CountryCreateResponse>(`${environment.url}/api/v1/price/delete?id=`+body.uid)
   }
+  getById(id:string){
+    return this.http.get<Price>(`${environment.url}/api/v1/price/get_by_id?id=`+id)
+  }
 }

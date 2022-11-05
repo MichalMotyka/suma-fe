@@ -16,8 +16,8 @@
   <label class="mb-1">Data rozpoczęcia umowy</label><br>
   <mat-form-field appearance="fill">
     <mat-label>Wybierz datę</mat-label>
-    <input matInput [matDatepicker]="picker" [(ngModel)]="data">
-    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <input matInput [matDatepicker]="picker" [(ngModel)]="data" [disabled]="viewMode">
+    <mat-datepicker-toggle matSuffix [for]="picker" [disabled]="viewMode"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field><br>
   <div class="input-group flex-nowrap mb-3">
@@ -40,7 +40,8 @@
            [resultFormatter]="formatter"/>
   </div>
   <div class="float-end">
-    <button [hidden]="viewMode" class="btn btn-success m-1" (click)="save()">Zatwierdź</button>
+    <button [hidden]="viewMode" class="btn btn-success m-1" *ngIf="!editMode" (click)="save()">Zatwierdź</button>
+    <button [hidden]="viewMode" class="btn btn-success m-1" *ngIf="editMode" (click)="edit()">Zatwierdź</button>
     <button class="btn btn-danger m-1" mat-dialog-close="kontrahent-form">Anuluj</button>
   </div>
 
