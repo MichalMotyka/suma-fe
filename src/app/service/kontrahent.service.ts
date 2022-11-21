@@ -59,4 +59,7 @@ export class KontrahentService {
   getAll(){
     return this.http.get<KontrahentList>(`${environment.url}/api/v1/kontrahent/list`)
   }
+  getByUid(uid:number){
+    return this.http.get<Kontrahent>(`${environment.url}/api/v1/kontrahent/get_uid?uid=`+uid)
+  }
 }

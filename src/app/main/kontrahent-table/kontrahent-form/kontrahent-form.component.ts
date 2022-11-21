@@ -63,6 +63,7 @@ export class KontrahentFormComponent implements OnInit {
         this.dic.push([value.post+" "+value.post_code+"; "+value.name,value.id])
         this.concratorModel = value.post+" "+value.post_code+"; "+value.name;
       })
+    this.ppe = data.ppe;
     this.nazwa = data.nazwa;
     this.nip = data.nip;
     this.pesel = data.pesel;

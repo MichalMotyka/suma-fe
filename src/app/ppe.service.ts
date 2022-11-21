@@ -39,6 +39,9 @@ getAll(){
 getById(id:string){
     return this.http.get<PP>(`${environment.url}/api/v1/pp/getByUid?id=`+id)
 }
+getByNumberId(id:number){
+  return this.http.get<PP>(`${environment.url}/api/v1/pp/getById?id=`+id)
+}
 
 }
 

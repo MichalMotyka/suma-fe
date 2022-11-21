@@ -1,0 +1,16 @@
+<div *ngIf="!veryfy && !confirm">
+  <p>Czy napewno chcesz usunąc element o nazwie {{ot.uid}}</p>
+  <button class="btn btn-success me-3" (click)="delete()">Tak</button>
+  <button class="btn btn-danger" mat-dialog-close>Nie</button>
+</div>
+<div *ngIf="veryfy">
+  <p>Czy napewno chcesz zmienić status Zlecenia Technicznego? {{ot.uid}}</p>
+  <button class="btn btn-success me-3" (click)="edit()">Tak</button>
+  <button class="btn btn-danger" mat-dialog-close>Nie</button>
+</div>
+<div *ngIf="confirm">
+  <p>Czy napewno chcesz zmienić status Zlecenia Technicznego? {{ot.uid}}</p>
+  <button class="btn btn-success me-3" (click)="edit()">Tak</button>
+  <button class="btn btn-danger" mat-dialog-close>Nie</button>
+</div>
+

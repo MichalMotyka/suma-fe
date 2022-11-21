@@ -59,6 +59,7 @@ import { MeterConfirmComponent } from './main/administrator/meter-list/meter-con
 import { OtComponent } from './main/ot/ot.component';
 import { OtFormComponent } from './main/ot/ot-form/ot-form.component';
 import { ContractConfirmComponent } from './main/contract/contract-confirm/contract-confirm.component';
+import { OtConfirmComponent } from './main/ot/ot-confirm/ot-confirm.component';
 
 @NgModule({
   declarations: [
@@ -98,7 +99,8 @@ import { ContractConfirmComponent } from './main/contract/contract-confirm/contr
     MeterConfirmComponent,
     OtComponent,
     OtFormComponent,
-    ContractConfirmComponent
+    ContractConfirmComponent,
+    OtConfirmComponent
   ],
   imports: [
     BrowserModule,

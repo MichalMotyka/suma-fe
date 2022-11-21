@@ -32,4 +32,10 @@ export class MeterService {
   remove(id:string){
     return this.http.delete<CountryCreateResponse>(`${environment.url}/api/v1/meter/remove?id=`+id)
   }
+  getById(id:string){
+    return this.http.get<Meter>(`${environment.url}/api/v1/meter/get_id?id=`+id)
+  }
+  getByUid(uid:string){
+    return this.http.get<Meter>(`${environment.url}/api/v1/meter/get_uid?uid=`+uid)
+  }
 }

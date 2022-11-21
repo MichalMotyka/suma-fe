@@ -5,9 +5,10 @@ import {Kontrahent, KontrahentService} from "../../../service/kontrahent.service
 import {Tariff, TariffService} from "../../../tariff.service";
 import {Price, PriceService} from "../../../price.service";
 import {Adres, AdresService} from "../../../service/adres/adres.service";
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {ContractItem, ContractService} from "../../../contract.service";
 import {logMessages} from "@angular-devkit/build-angular/src/builders/browser-esbuild/esbuild";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-contract-form',
@@ -45,7 +46,7 @@ export class ContractFormComponent implements OnInit {
   status!: string;
   editMode:boolean = false;
 
-  constructor(@Inject(MAT_DIALOG_DATA) data: {row:ContractItem,viewMode:boolean,editMode:boolean},private contractorServis:KontrahentService,private tarifService:TariffService,private priceService:PriceService,private adresService:AdresService,private dialog:MatDialogRef<any>,private contractorService:ContractService) {
+  constructor(@Inject(MAT_DIALOG_DATA) data: {row:ContractItem,viewMode:boolean,editMode:boolean}, private toaster:ToastrService,private contractorServis:KontrahentService,private tarifService:TariffService,private priceService:PriceService,private adresService:AdresService,private dialog:MatDialogRef<any>,private contractorService:ContractService) {
     dialog.disableClose = true;
     if (data.viewMode || data.editMode){
       this.id = data.row.id;
@@ -217,7 +218,21 @@ export class ContractFormComponent implements OnInit {
       this.endDate,
       this.status,
       this.fazowosc
-    )).subscribe()
+    )).subscribe(value => {
+      if (value.status == 200){
+        this.toaster.success("Pomyślnie zaktualizowano umowe","Sukces", {
+          timeOut: 3000,
+          progressBar: true,
+          progressAnimation: "decreasing"})
+        this.dialog.close();
+      }else {
+        this.toaster.error("Błąd danych skontaktuj się z administratorem","Błąd", {
+          timeOut: 3000,
+          progressBar: true,
+          progressAnimation: "decreasing"
+        })
+      }
+    })
   }
 
   save() {
@@ -234,6 +249,20 @@ export class ContractFormComponent implements OnInit {
       this.endDate,
       "",
       this.fazowosc
-      )).subscribe()
+      )).subscribe(value => {
+      if (value.status == 200){
+        this.toaster.success("Pomyślnie utworzono umowe","Sukces", {
+          timeOut: 3000,
+          progressBar: true,
+          progressAnimation: "decreasing"})
+        this.dialog.close();
+      }else {
+        this.toaster.error("Nie udało się utworzyć umowy, obiekt już istnieje","Błąd", {
+          timeOut: 3000,
+          progressBar: true,
+          progressAnimation: "decreasing"
+        })
+      }
+    })
   }
 }

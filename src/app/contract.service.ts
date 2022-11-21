@@ -45,4 +45,10 @@ export class ContractService {
   edit(body:ContractItem){
     return this.http.put<CountryCreateResponse>(`${environment.url}/api/v1/contract/edit`,body)
   }
+  getById(id:string){
+    return this.http.get<ContractItem>(`${environment.url}/api/v1/contract/getById?id=`+id)
+  }
+  getByUid(uid:string){
+    return this.http.get<ContractItem>(`${environment.url}/api/v1/contract/getByUid?uid=`+uid)
+  }
 }
