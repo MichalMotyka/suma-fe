@@ -51,4 +51,7 @@ export class ContractService {
   getByUid(uid:string){
     return this.http.get<ContractItem>(`${environment.url}/api/v1/contract/getByUid?uid=`+uid)
   }
+  active(id:number,date:string){
+    return this.http.put<CountryCreateResponse>(`${environment.url}/api/v1/contract/activate?id=`+id,date)
+  }
 }

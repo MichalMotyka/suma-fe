@@ -55,4 +55,12 @@ export class ContractComponent implements OnInit {
   edit(row:any) {
     this.dialog.open(ContractFormComponent,{data:{row:row,viewMode:false,editMode:true}})
   }
+
+  veryfication(row:any) {
+    this.dialog.open(ContractConfirmComponent,{data:{row:row,activate:true,end:false}});
+  }
+
+  end(row:any) {
+    this.dialog.open(ContractConfirmComponent,{data:{row:row,activate:false,end:true}});
+  }
 }

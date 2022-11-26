@@ -12,9 +12,13 @@ import {ToastrService} from "ngx-toastr";
 export class ContractConfirmComponent implements OnInit {
 
   contract:ContractItem;
-
-  constructor(@Inject(MAT_DIALOG_DATA) data: {row:ContractItem},private contractServis:ContractService,private taoster:ToastrService,private dialog:MatDialog) {
+  activate:boolean;
+  end: boolean;
+  data: any;
+  constructor(@Inject(MAT_DIALOG_DATA) data: {row:ContractItem,activate:boolean,end:boolean},private contractServis:ContractService,private taoster:ToastrService,private dialog:MatDialog) {
     this.contract = data.row;
+    this.activate = data.activate;
+    this.end = data.end
   }
 
   ngOnInit(): void {
@@ -31,6 +35,44 @@ export class ContractConfirmComponent implements OnInit {
         this.dialog.closeAll();
       }else{
         this.taoster.error("Podana umowa nie istnieje","Błąd",{
+          timeOut: 3000,
+          progressBar: true,
+          progressAnimation: "decreasing"
+        })
+      }
+    })
+  }
+
+  activat(){
+    this.contractServis.active(this.contract.id,'').subscribe(value => {
+      if(value.status==200){
+        this.taoster.success("Pomyslnie aktywowano umowę","Sukces",{
+          timeOut: 3000,
+          progressBar: true,
+          progressAnimation: "decreasing"
+        })
+        this.dialog.closeAll();
+      }else{
+        this.taoster.error("Wystąpił błąd","Błąd",{
+          timeOut: 3000,
+          progressBar: true,
+          progressAnimation: "decreasing"
+        })
+      }
+    })
+  }
+
+  endContract(){
+    this.contractServis.active(this.contract.id,this.data).subscribe(value => {
+      if(value.status==200){
+        this.taoster.success("Pomyslnie rozpoczęto poreces zamknięcia umowy","Sukces",{
+          timeOut: 3000,
+          progressBar: true,
+          progressAnimation: "decreasing"
+        })
+        this.dialog.closeAll();
+      }else{
+        this.taoster.error("Wystąpił błąd","Błąd",{
           timeOut: 3000,
           progressBar: true,
           progressAnimation: "decreasing"
