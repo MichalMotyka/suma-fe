@@ -11,6 +11,7 @@ import {PriceListComponent} from "./main/price-list/price-list.component";
 import {ContractComponent} from "./main/contract/contract.component";
 import {MeterListComponent} from "./main/administrator/meter-list/meter-list.component";
 import {OtComponent} from "./main/ot/ot.component";
+import {ReadingsComponent} from "./main/readings/readings.component";
 
 
 const routes: Routes = [
@@ -24,7 +25,8 @@ const routes: Routes = [
       {path:"price",component:PriceListComponent},
       {path:"contract",component:ContractComponent},
       {path:"meter_list",component:MeterListComponent},
-      {path:"ot_list",component:OtComponent}
+      {path:"ot_list",component:OtComponent},
+      {path:"readings",component:ReadingsComponent}
     ]},
 ];
 

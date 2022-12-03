@@ -60,6 +60,7 @@ import { OtComponent } from './main/ot/ot.component';
 import { OtFormComponent } from './main/ot/ot-form/ot-form.component';
 import { ContractConfirmComponent } from './main/contract/contract-confirm/contract-confirm.component';
 import { OtConfirmComponent } from './main/ot/ot-confirm/ot-confirm.component';
+import { ReadingsComponent } from './main/readings/readings.component';
 
 @NgModule({
   declarations: [
@@ -100,7 +101,8 @@ import { OtConfirmComponent } from './main/ot/ot-confirm/ot-confirm.component';
     OtComponent,
     OtFormComponent,
     ContractConfirmComponent,
-    OtConfirmComponent
+    OtConfirmComponent,
+    ReadingsComponent
   ],
   imports: [
     BrowserModule,

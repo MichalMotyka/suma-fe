@@ -25,7 +25,8 @@ export class SidebarComponent implements OnInit {
     new MenuElements("Składniki","#"),
   new MenuElements("Administrator","#"),
   new MenuElements("Taryfa","#"),
-  new MenuElements("Cennik","#")];
+  new MenuElements("Cennik","#"),
+  new MenuElements("Odczyty","#")];
   constructor(private router:Router,private dialog:MatDialog) { }
 
   ngOnInit(): void {
@@ -48,6 +49,8 @@ export class SidebarComponent implements OnInit {
       this.router.navigate(["main/contract"])
     }else if (operaion =="Zlecenie OT"){
       this.router.navigate(["main/ot_list"])
+    }else if(operaion =="Odczyty"){
+      this.router.navigate(["main/readings"])
     }
   }
 
