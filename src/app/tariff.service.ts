@@ -35,4 +35,7 @@ export class TariffService {
   getById(id:number){
     return this.http.get<Tariff>(`${environment.url}/api/v1/tariff/get?id=`+id)
   }
+  getByUid(uid:string){
+    return this.http.get<TariffList>(`${environment.url}/api/v1/tariff/getByUid?uid=`+uid)
+  }
 }

@@ -6,6 +6,8 @@ import {PriceList} from "../../price.service";
 import {Subscription} from "rxjs";
 import {MatDialog} from "@angular/material/dialog";
 import {ReadingsService} from "../../readings.service";
+import {ReadingsFormComponent} from "./readings-form/readings-form.component";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-readings',
@@ -13,14 +15,14 @@ import {ReadingsService} from "../../readings.service";
   styleUrls: ['./readings.component.css']
 })
 export class ReadingsComponent implements OnInit {
-  formModule: any;
+  formModule: any = ReadingsFormComponent;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatTable) table!: MatTable<PriceList>;
   dataSource:any;
   displayedColumns = ['name','contractor','tarif','actions'];
   private subcription!: Subscription;
-  constructor(private dialog:MatDialog,private readingServices:ReadingsService) {
+  constructor(private dialog:MatDialog,private readingServices:ReadingsService,private toaster:ToastrService) {
     this.dialog.afterAllClosed.subscribe(value => {
       this.subcription.unsubscribe();
       this.addValue();
@@ -49,5 +51,46 @@ export class ReadingsComponent implements OnInit {
 
   view(row:any) {
 
+  }
+
+  veryfication(row:any) {
+      this.readingServices.activate(row).subscribe(value => {
+        if (value.status==200){
+          this.toaster.success("Pomyślnie aktywowano odczyt","Sukces", {
+            timeOut: 3000,
+            progressBar: true,
+            progressAnimation: "decreasing"})
+          this.dialog.closeAll();
+        }
+      },error => {
+        this.toaster.error("Nie udało się aktywować odczytu skontaktuj się z administratorem","Błąd", {
+          timeOut: 3000,
+          progressBar: true,
+          progressAnimation: "decreasing"
+        })
+      },()=>{
+        this.subcription.unsubscribe();
+        this.addValue();
+      })
+  }
+  delete(row:any){
+    this.readingServices.delete(row).subscribe(value => {
+      if (value.status==200){
+        this.toaster.success("Pomyślnie anulowano odczyt","Sukces", {
+          timeOut: 3000,
+          progressBar: true,
+          progressAnimation: "decreasing"})
+        this.dialog.closeAll();
+      }
+    },error => {
+      this.toaster.error("Nie udało się anulować odczytu skontaktuj się z administratorem","Błąd", {
+        timeOut: 3000,
+        progressBar: true,
+        progressAnimation: "decreasing"
+      })
+    },()=>{
+      this.subcription.unsubscribe();
+      this.addValue();
+    })
   }
 }

@@ -1,0 +1,30 @@
+<div class="mat-elevation-z8">
+  <table mat-table class="full-width-table" [dataSource]="dataSource" matSort aria-label="Elements">
+    <!-- Id Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Składnik</th>
+      <td mat-cell *matCellDef="let row">{{row.name}}</td>
+    </ng-container>
+    <ng-container matColumnDef="contractor">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Poprzedni odczyt</th>
+      <td mat-cell *matCellDef="let row">{{row.prev}}</td>
+    </ng-container>
+    <!-- Name Column -->
+    <ng-container matColumnDef="tarif">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Odczyt</th>
+      <td mat-cell *matCellDef="let row">
+        <input [(ngModel)]="row.value" (change)="edit()">
+        </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns" ></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="row-selector" [ngStyle]="{'background':row.active === 'N' ? '#808080':'#FFF'}"></tr>
+  </table>
+
+  <mat-paginator #paginator
+                 [length]="dataSource?.data?.length"
+                 [pageIndex]="0"
+                 [pageSize]="10"
+                 [pageSizeOptions]="[5, 10, 20]"
+                 aria-label="Select page">
+  </mat-paginator>
+</div>
