@@ -46,4 +46,7 @@ export class ReadingsService {
   delete(body:Readings) {
     return this.http.delete<CountryCreateResponse>(`${environment.url}/api/v1/reading/delete?id=`+body.id)
   }
+  end(body:Readings){
+    return this.http.put<CountryCreateResponse>(`${environment.url}/api/v1/reading/end`,body)
+  }
 }

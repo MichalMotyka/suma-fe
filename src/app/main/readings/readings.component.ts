@@ -44,11 +44,6 @@ export class ReadingsComponent implements OnInit {
     })
   }
 
-
-  remove(row:any) {
-
-  }
-
   view(row:any) {
 
   }
@@ -84,6 +79,27 @@ export class ReadingsComponent implements OnInit {
       }
     },error => {
       this.toaster.error("Nie udało się anulować odczytu skontaktuj się z administratorem","Błąd", {
+        timeOut: 3000,
+        progressBar: true,
+        progressAnimation: "decreasing"
+      })
+    },()=>{
+      this.subcription.unsubscribe();
+      this.addValue();
+    })
+  }
+
+  end(row:any) {
+    this.readingServices.end(row).subscribe(value => {
+      if (value.status==200){
+        this.toaster.success("Pomyślnie rozliczono odczyt","Sukces", {
+          timeOut: 3000,
+          progressBar: true,
+          progressAnimation: "decreasing"})
+        this.dialog.closeAll();
+      }
+    },error => {
+      this.toaster.error("Nie udało się rozliczyć odczytu skontaktuj się z administratorem","Błąd", {
         timeOut: 3000,
         progressBar: true,
         progressAnimation: "decreasing"
