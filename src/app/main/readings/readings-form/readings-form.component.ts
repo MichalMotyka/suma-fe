@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {debounceTime, distinctUntilChanged, Observable, OperatorFunction} from "rxjs";
 import {map} from "rxjs/operators";
 import {KontrahentService} from "../../../service/kontrahent.service";
@@ -6,7 +6,7 @@ import {ContractItem, ContractService} from "../../../contract.service";
 import {TableSchema} from "./readings-table/readings-table.component";
 import {ReadingItem, Readings, ReadingsService} from "../../../readings.service";
 import {ToastrService} from "ngx-toastr";
-import {MatDialog} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-readings-form',
@@ -22,12 +22,26 @@ export class ReadingsFormComponent implements OnInit {
   contractUId:string=''
   tableData:TableSchema[]=[]
   formatter = (result: string) => result.toUpperCase();
-  constructor(private contractorServeice:KontrahentService,private contractService:ContractService,private readingsService:ReadingsService,private toaster:ToastrService, private dialog:MatDialog) {
-    contractorServeice.getAll().subscribe(value => {
-      value.kontrahentList.forEach(kontrahent=>{
-        this.contractor.push(kontrahent.numerKlienta+" ("+kontrahent.nazwa+")")
+  constructor(@Inject(MAT_DIALOG_DATA) data: { row: Readings, viewmode: boolean},private contractorServeice:KontrahentService,private contractService:ContractService,private readingsService:ReadingsService,private toaster:ToastrService, private dialog:MatDialog) {
+    if (data.viewmode){
+      this.contractService.getById(String(data.row.contract)).subscribe(
+        value => {
+          this.contractUId = value.uid
+        }
+      )
+      this.contractorServeice.getById(String(data.row.contractor)).subscribe(
+        value => {
+          this.contractorModel = value.numerKlienta+' ('+value.nazwa+')'
+        }
+      )
+      this.data = data.row.data
+    }else {
+      contractorServeice.getAll().subscribe(value => {
+        value.kontrahentList.forEach(kontrahent => {
+          this.contractor.push(kontrahent.numerKlienta + " (" + kontrahent.nazwa + ")")
+        })
       })
-    })
+    }
   }
 
   ngOnInit(): void {

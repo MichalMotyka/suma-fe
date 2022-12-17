@@ -45,7 +45,7 @@ export class ReadingsComponent implements OnInit {
   }
 
   view(row:any) {
-
+    this.dialog.open(ReadingsFormComponent,{data:{row:row,viewmode:true}})
   }
 
   veryfication(row:any) {
