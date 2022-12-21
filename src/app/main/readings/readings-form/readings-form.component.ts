@@ -21,9 +21,12 @@ export class ReadingsFormComponent implements OnInit {
   contract!: ContractItem;
   contractUId:string=''
   tableData:TableSchema[]=[]
+  readingsId!:string;
   formatter = (result: string) => result.toUpperCase();
   constructor(@Inject(MAT_DIALOG_DATA) data: { row: Readings, viewmode: boolean},private contractorServeice:KontrahentService,private contractService:ContractService,private readingsService:ReadingsService,private toaster:ToastrService, private dialog:MatDialog) {
+    this.viewMode = data.viewmode
     if (data.viewmode){
+      this.readingsId = String(data.row.id)
       this.contractService.getById(String(data.row.contract)).subscribe(
         value => {
           this.contractUId = value.uid

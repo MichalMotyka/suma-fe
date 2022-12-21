@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../environments/environment";
 import {CountryCreateResponse} from "./main/administrator/country-list/country-form/country-form.component";
+import {TableSchema} from "./main/readings/readings-form/readings-table/readings-table.component";
 
 export class Readings{
   constructor(public id:number,public uid:string, public contract:number,public contractor:number,public data:string,public status:string) {
@@ -15,8 +16,8 @@ export class ReadingItem{
   constructor(public id:number,public readingId:number,public element:number,public wear:number) {
   }
 }
-interface readingsList{
-  readingList:ReadingsView[]
+export interface readingsList{
+  readingList:TableSchema[]
 }
 
 
@@ -48,5 +49,8 @@ export class ReadingsService {
   }
   end(body:Readings){
     return this.http.put<CountryCreateResponse>(`${environment.url}/api/v1/reading/end`,body)
+  }
+  getById(id:number){
+    return this.http.get<readingsList>(`${environment.url}/api/v1/reading/getById?id=`+id)
   }
 }

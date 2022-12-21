@@ -7,6 +7,7 @@ import {Subscription} from "rxjs";
 import {ContractItem, ContractService} from "../../../../contract.service";
 import {TariffService} from "../../../../tariff.service";
 import {ComponentService} from "../../../../component.service";
+import {ReadingsService} from "../../../../readings.service";
 
 export class TableSchema{
   constructor(public id:number,
@@ -16,6 +17,9 @@ export class TableSchema{
               public used:number) {
   }
 
+}
+export interface TableSchemaList{
+  tableSchemaList:TableSchema[]
 }
 
 @Component({
@@ -33,18 +37,34 @@ export class ReadingsTableComponent implements OnInit,OnChanges {
   private subcription!: Subscription;
   private tableDataSet:TableSchema[] = []
   @Input() contract!:ContractItem
+  @Input() readingId!:string
   @Output() eventTask = new EventEmitter<TableSchema[]>()
-  constructor(private tarrifService:TariffService,private componentService:ComponentService) {
+  constructor(private tarrifService:TariffService,private componentService:ComponentService,private readingService:ReadingsService) {
 
   }
 
   ngOnInit(): void {
   }
   ngOnChanges() {
-    if (this.subcription){
-      this.subcription.unsubscribe()
+    if (this.readingId){
+      this.readingService.getById(Number(this.readingId)).subscribe(
+        value => {
+          value.readingList.forEach(reading=>{
+            this.tableDataSet.push(new TableSchema(reading.id,reading.name,reading.prev,reading.value,reading.used))
+          })
+        },error => {},
+        ()=>{
+          this.refreshTable()
+        }
+
+      )
     }
-    this.addValue()
+    if (!this.readingId) {
+      if (this.subcription) {
+        this.subcription.unsubscribe()
+      }
+      this.addValue()
+    }
   }
 
   edit(){
@@ -68,5 +88,17 @@ export class ReadingsTableComponent implements OnInit,OnChanges {
         })
       }
     })
+  }
+  refreshTable(){
+    this.dataSource = new MatTableDataSource(this.tableDataSet);
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
+  }
+
+  isViewMode() {
+    if (this.readingId){
+      return true
+    }
+    return false
   }
 }
