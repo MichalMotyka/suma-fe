@@ -4,6 +4,11 @@ import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import {MatDialog} from "@angular/material/dialog";
 import {KontrahentFormComponent} from "../kontrahent-table/kontrahent-form/kontrahent-form.component";
+import {HttpClient} from "@angular/common/http";
+import {CountryCreateResponse} from "../administrator/country-list/country-form/country-form.component";
+import {environment} from "../../../environments/environment";
+import {Router} from "@angular/router";
+import {CookieService} from "ngx-cookie-service";
 
 @Component({
   selector: 'app-main-nav',
@@ -18,10 +23,12 @@ export class MainNavComponent {
       shareReplay()
     );
 
-  constructor(private breakpointObserver: BreakpointObserver,private dialogRef: MatDialog) {}
+  constructor(private breakpointObserver: BreakpointObserver,private dialogRef: MatDialog,private http:HttpClient,private route:Router,private cookieService:CookieService) {}
 
   logout() {
-
+      this.http.get<CountryCreateResponse>(`${environment.url}/api/v1/logout`).subscribe(value => {
+        this.route.navigate(["/"])
+      })
   }
 
   add() {
