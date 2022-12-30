@@ -63,6 +63,8 @@ import { OtConfirmComponent } from './main/ot/ot-confirm/ot-confirm.component';
 import { ReadingsComponent } from './main/readings/readings.component';
 import { ReadingsFormComponent } from './main/readings/readings-form/readings-form.component';
 import { ReadingsTableComponent } from './main/readings/readings-form/readings-table/readings-table.component';
+import { UsersComponent } from './main/users/users.component';
+import { UserFormComponent } from './main/users/user-form/user-form.component';
 
 @NgModule({
   declarations: [
@@ -106,7 +108,9 @@ import { ReadingsTableComponent } from './main/readings/readings-form/readings-t
     OtConfirmComponent,
     ReadingsComponent,
     ReadingsFormComponent,
-    ReadingsTableComponent
+    ReadingsTableComponent,
+    UsersComponent,
+    UserFormComponent
   ],
   imports: [
     BrowserModule,
