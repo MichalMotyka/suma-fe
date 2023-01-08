@@ -2,6 +2,7 @@ import {Component, Inject, INJECTOR, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialog} from "@angular/material/dialog";
 import {Adres, AdresService} from "../../../../service/adres/adres.service";
 import {ToastrService} from "ngx-toastr";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-adres-form',
@@ -14,6 +15,12 @@ export class AdresFormComponent implements OnInit {
   name!:string;
   GUS!:string;
   service:AdresService;
+  formGroup = new FormGroup({
+      name:new FormControl('',Validators.required),
+      gus:new FormControl('',[Validators.required]),
+      kraj:new FormControl('',Validators.required)
+  })
+
   constructor(@Inject(MAT_DIALOG_DATA) data:{rows:any,viewMode: boolean,service:AdresService},private toaster: ToastrService,private dialog:MatDialog) {
     this.viewMode = data.viewMode;
     this.service = data.service;

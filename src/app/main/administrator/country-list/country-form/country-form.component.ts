@@ -5,6 +5,7 @@ import {HttpClient} from "@angular/common/http";
 import {CountryService} from "../../../../country.service";
 import {CountryFormServiceService} from "../../../../service/country-form-service.service";
 import {CountryComponent} from "../country.component";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 export class CountryItem {
   id: number;
@@ -51,6 +52,14 @@ export class CountryFormComponent implements OnInit {
   postMask: string = ""
   gusMask: string = ""
   viewMode: boolean;
+
+  countryFormV = new FormGroup({
+    countryName:new FormControl('',Validators.required),
+    prefix: new FormControl('',[Validators.required,Validators.max(4)]),
+    maskaGus: new FormControl('',[Validators.required,Validators.pattern('A*0*-*')]),
+    maskaKodu: new FormControl('',[Validators.required,Validators.pattern('A*0*-*')])
+  })
+
   constructor(
     @Inject(MAT_DIALOG_DATA) data: {viewMode: boolean},
     private toaster: ToastrService,
@@ -71,20 +80,33 @@ export class CountryFormComponent implements OnInit {
   }
 
   save() {
-    if (this.name.length > 4, this.prefix.length > 1) {
-      this.addNewCountry(new CountryItem(0, this.name, this.prefix, this.gusMask, this.postMask));
-      this.dialog.closeAll();
-    } else {
-      this.toaster.error("Błędnie wypełniono formularz, dane nie zostały zapisane", "Błąd", {
-        timeOut: 3000,
-        progressBar: true,
-        progressAnimation: "decreasing"
-      })
-    }
+    console.log(this.countryFormV.value)
+    // if (this.name.length > 4, this.prefix.length > 1) {
+    //   this.addNewCountry(new CountryItem(0, this.name, this.prefix, this.gusMask, this.postMask));
+    //   this.dialog.closeAll();
+    // } else {
+    //   this.toaster.error("Błędnie wypełniono formularz, dane nie zostały zapisane", "Błąd", {
+    //     timeOut: 3000,
+    //     progressBar: true,
+    //     progressAnimation: "decreasing"
+    //   })
+    // }
   }
 
   addNewCountry(value: CountryItem) {
     this.country.addData(value);
+  }
+  getCountryNameControl(){
+    return this.countryFormV.get('countryName')?.invalid && this.countryFormV.get('countryName')?.touched;
+  }
+  getPrefixConrol(){
+    return this.countryFormV.get('prefix')?.invalid && this.countryFormV.get('prefix')?.touched;
+  }
+  getMaskaKoduControl(){
+    return this.countryFormV.get('maskaKodu')?.invalid && this.countryFormV.get('maskaKodu')?.touched;
+  }
+  getGusMakControl(){
+    return this.countryFormV.get('maskaGus')?.invalid && this.countryFormV.get('maskaGus')?.touched;
   }
 
 }

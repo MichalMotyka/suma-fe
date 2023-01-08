@@ -2,6 +2,7 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {ToastrService} from "ngx-toastr";
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {Adres, AdresService} from "../../../../../service/adres/adres.service";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-adres-inside-form',
@@ -18,6 +19,13 @@ export class AdresInsideFormComponent implements OnInit {
    parent_gus:string="";
   private instance: any;
    viewMode: boolean;
+   formGroup = new FormGroup({
+     name: new FormControl('',Validators.required),
+     gus: new FormControl('',Validators.required),
+     post: new FormControl('',Validators.required),
+     type: new FormControl('',Validators.required),
+     post_code: new FormControl('',[Validators.required,Validators.pattern('00-000')])
+   })
 
   constructor(@Inject(MAT_DIALOG_DATA) data: {adres: any,instance:any,rows:any,viewMode:boolean},private toaster:ToastrService,private dialog:MatDialogRef<any>,service:AdresService) {
     this.service = service;

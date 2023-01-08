@@ -1,16 +1,23 @@
-<div class="input-group flex-nowrap mb-3">
-  <span class="input-group-text">Województwo</span>
-  <input type="text" class="form-control" placeholder="Województwo" [disabled]="viewMode" [(ngModel)]="name" aria-label="Username" aria-describedby="addon-wrapping">
-</div>
-<div class="input-group flex-nowrap mb-3">
-  <span class="input-group-text">GUS</span>
-  <input type="text" class="form-control" placeholder="GUS" aria-label="Username" [disabled]="viewMode" [(ngModel)]="GUS" aria-describedby="addon-wrapping">
-</div>
-<div class="input-group flex-nowrap mb-3">
-  <span class="input-group-text">Kraj</span>
-  <input type="text" class="form-control" placeholder="Kraj" aria-label="Username" [disabled]="viewMode" aria-describedby="addon-wrapping">
-</div>
-<button class="btn btn-success me-3" [hidden]="viewMode" (click)="create()">Zatwierdź</button>
-<button class="btn btn-danger" [matDialogClose]="this">Anuluj</button>
-
+<form [formGroup]="formGroup">
+  <div class="input-group flex-nowrap mb-2">
+    <span class="input-group-text">Województwo</span>
+    <input type="text" class="form-control" placeholder="Województwo" [disabled]="viewMode" [(ngModel)]="name"
+           aria-label="Username" aria-describedby="addon-wrapping" formControlName="name">
+  </div>
+  <span *ngIf="formGroup.get('name')?.invalid && formGroup.get('name')?.touched" style="color:red;" class="input-group flex-nowrap mb-2">Wartość nazwy województwa nie może być pusta</span>
+  <div class="input-group flex-nowrap mb-3">
+    <span class="input-group-text">GUS</span>
+    <input type="text" class="form-control" placeholder="GUS" aria-label="Username" [disabled]="viewMode"
+           [(ngModel)]="GUS" aria-describedby="addon-wrapping" formControlName="gus">
+  </div>
+  <span *ngIf="formGroup.get('gus')?.invalid && formGroup.get('gus')?.touched" style="color:red;" class="input-group flex-nowrap mb-2">Wartość pola gus nie może być pusta</span>
+  <div class="input-group flex-nowrap mb-3">
+    <span class="input-group-text">Kraj</span>
+    <input type="text" class="form-control" placeholder="Kraj" aria-label="Username" [disabled]="viewMode"
+           aria-describedby="addon-wrapping" formControlName="kraj">
+  </div>
+  <span *ngIf="formGroup.get('kraj')?.invalid && formGroup.get('kraj')?.touched" style="color:red;" class="input-group flex-nowrap mb-2">Wartość pola kraj nie może być pusta</span>
+  <button class="btn btn-success me-3" [hidden]="viewMode" [disabled]="formGroup.invalid" (click)="create()">Zatwierdź</button>
+  <button class="btn btn-danger" [matDialogClose]="this">Anuluj</button>
+</form>
 
