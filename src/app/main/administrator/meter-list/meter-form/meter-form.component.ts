@@ -4,6 +4,7 @@ import {map} from "rxjs/operators";
 import {Meter, MeterService} from "../../../../meter.service";
 import {MAT_DIALOG_DATA, MatDialog} from "@angular/material/dialog";
 import {ToastrService} from "ngx-toastr";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-meter-form',
@@ -16,6 +17,12 @@ export class MeterFormComponent implements OnInit {
   fazowoscDic:string[] = ["1","3"];
   fazowosc!: string;
   model: any;
+  formGroup = new FormGroup({
+    name: new FormControl('',Validators.required),
+    model: new FormControl('',Validators.required),
+    faz: new FormControl('',Validators.required)
+  })
+
   formatter = (result: string) => result.toUpperCase();
   constructor(@Inject(MAT_DIALOG_DATA) data: {viewMode: boolean,row:Meter},private meterService:MeterService,private dialog:MatDialog,private toaster:ToastrService) {
     if(data.viewMode){

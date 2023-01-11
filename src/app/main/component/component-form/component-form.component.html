@@ -1,24 +1,28 @@
-<div class="input-group flex-nowrap mb-3">
-  <span class="input-group-text">Nazwa</span>
-  <input type="text" class="form-control" placeholder="Nazwa" [disabled]="viewMode" [(ngModel)]="name" aria-label="Username" aria-describedby="addon-wrapping">
-</div>
-<div class="input-group flex-nowrap mb-3" *ngIf="viewMode">
-  <span class="input-group-text">Typ</span>
-  <input type="text" class="form-control" placeholder="Nazwa" [disabled]="viewMode" [(ngModel)]="type" aria-label="Username" aria-describedby="addon-wrapping">
-</div>
-<div class="input-group flex-nowrap mb-3" *ngIf="!viewMode">
-<mat-form-field appearance="fill">
-  <mat-label>Typ składnika</mat-label>
-  <mat-select [formControl]="componentControl" required [(ngModel)]="type">
-    <mat-option>--</mat-option>
-    <mat-option *ngFor="let animal of animals" [value]="animal">
-      {{animal.name}}
-    </mat-option>
-  </mat-select>
-  <mat-error *ngIf="componentControl.hasError('required')">Proszę wybrać typ składnika</mat-error>
-</mat-form-field>
-</div>
-<button class="btn btn-success me-3" [hidden]="viewMode" (click)="create()">Zatwierdź</button>
-<button class="btn btn-danger" [matDialogClose]="this">Anuluj</button>
-
+<form [formGroup]="formGroup">
+  <div class="input-group flex-nowrap mb-2">
+    <span class="input-group-text">Nazwa</span>
+    <input type="text" class="form-control" placeholder="Nazwa" [disabled]="!viewMode" [(ngModel)]="name" formControlName="name"
+           aria-label="Username" aria-describedby="addon-wrapping">
+  </div>
+  <mat-error class="input-group flex-nowrap mb-2" *ngIf="formGroup.get('name')?.invalid && formGroup.get('name')?.touched">Proszę wybrać typ składnika</mat-error>
+  <div class="input-group flex-nowrap mb-3" *ngIf="viewMode">
+    <span class="input-group-text">Typ</span>
+    <input type="text" class="form-control" placeholder="Nazwa" [disabled]="!viewMode" [(ngModel)]="type"
+           aria-label="Username" aria-describedby="addon-wrapping">
+  </div>
+  <div class="input-group flex-nowrap mb-3" *ngIf="!viewMode">
+    <mat-form-field appearance="fill">
+      <mat-label>Typ składnika</mat-label>
+      <mat-select required [(ngModel)]="type" formControlName="type">
+        <mat-option>--</mat-option>
+        <mat-option *ngFor="let animal of animals" [value]="animal">
+          {{animal.name}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="formGroup.get('type')?.invalid">Proszę wybrać typ składnika</mat-error>
+    </mat-form-field>
+  </div>
+  <button class="btn btn-success me-3" [hidden]="viewMode" [disabled]="formGroup?.invalid" (click)="create()">Zatwierdź</button>
+  <button class="btn btn-danger" [matDialogClose]="this">Anuluj</button>
+</form>
 

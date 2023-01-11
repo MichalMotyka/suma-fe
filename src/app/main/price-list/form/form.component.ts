@@ -12,6 +12,7 @@ import {MatSort} from "@angular/material/sort";
 import {MatTable, MatTableDataSource} from "@angular/material/table";
 import {Kontrahent, KontrahentList} from "../../../service/kontrahent.service";
 import {numbers} from "@material/dialog";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-form',
@@ -33,7 +34,10 @@ export class FormComponent implements OnInit {
   dataSource:any;
   viewMode:boolean;
   private subcription!: Subscription;
-
+  formGroup = new FormGroup({
+    name:new FormControl('',Validators.required),
+    type: new FormControl('',Validators.required)
+  })
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['name','price'];
   formatter = (result: string) => result.toUpperCase();

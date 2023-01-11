@@ -40,7 +40,6 @@ export class TariffComponent implements OnInit {
   addValue(){
     this.subcription = this.tariffService.getAll().subscribe({
       next: value => {
-        console.log(value)
         this.dataSource = new MatTableDataSource(value.tarifList);
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;

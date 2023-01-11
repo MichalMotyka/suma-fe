@@ -1,19 +1,26 @@
-<div class="input-group flex-nowrap mb-3">
-  <span class="input-group-text">Nazwa</span>
-  <input type="text" class="form-control" placeholder="Nazwa" aria-label="Username" aria-describedby="addon-wrapping"
-         [(ngModel)]="name" [disabled]="viewMode" >
-</div>
-<div class="input-group flex-nowrap mb-3">
-  <span class="input-group-text">Id modelu</span>
-  <input type="text" class="form-control" placeholder="0000000" aria-label="Username" aria-describedby="addon-wrapping"
-         [(ngModel)]="model" [disabled]="viewMode" >
-</div>
-<div class="input-group flex-nowrap mb-3">
-  <span class="input-group-text">Fazowość</span>
-  <input class="typeahead-format" type="text" class="form-control" [(ngModel)]="fazowosc" [disabled]="viewMode" [ngbTypeahead]="fazSearch"
-         [resultFormatter]="formatter"/>
-</div>
-<div class="float-end">
-  <button class="btn btn-success me-3" (click)="save()" [hidden]="viewMode">Zatwierdź</button>
-  <button class="btn btn-danger" [matDialogClose]="this">Anuluj</button>
-</div>
+<form [formGroup]="formGroup">
+  <div class="input-group flex-nowrap mb-3">
+    <span class="input-group-text">Nazwa</span>
+    <input type="text" class="form-control" placeholder="Nazwa" aria-label="Username" aria-describedby="addon-wrapping" formControlName="name"
+           [(ngModel)]="name" [disabled]="viewMode">
+  </div>
+  <span *ngIf="formGroup.get('name')?.invalid && formGroup.get('name')?.touched" class="input-group flex-nowrap mb-2" style="color:red;">Nazwa licznika nie może być pusta</span>
+  <div class="input-group flex-nowrap mb-3">
+    <span class="input-group-text">Id modelu</span>
+    <input type="text" class="form-control" placeholder="0000000" aria-label="Username" formControlName="model"
+           aria-describedby="addon-wrapping"
+           [(ngModel)]="model" [disabled]="viewMode">
+  </div>
+  <span *ngIf="formGroup.get('model')?.invalid && formGroup.get('model')?.touched" class="input-group flex-nowrap mb-2" style="color:red;">Wartośc modelu nie może być pusta</span>
+  <div class="input-group flex-nowrap mb-3">
+    <span class="input-group-text">Fazowość</span>
+    <input class="typeahead-format" type="text" class="form-control" [(ngModel)]="fazowosc" [disabled]="viewMode" formControlName="faz"
+           [ngbTypeahead]="fazSearch"
+           [resultFormatter]="formatter"/>
+  </div>
+  <span *ngIf="formGroup.get('faz')?.invalid && formGroup.get('faz')?.touched" class="input-group flex-nowrap mb-2" style="color:red;">Fazowość nie może być pusta musi być podana wartość 1 lub 2</span>
+  <div class="float-end">
+    <button class="btn btn-success me-3" [disabled]="formGroup?.invalid" (click)="save()" [hidden]="viewMode">Zatwierdź</button>
+    <button class="btn btn-danger" [matDialogClose]="this">Anuluj</button>
+  </div>
+</form>

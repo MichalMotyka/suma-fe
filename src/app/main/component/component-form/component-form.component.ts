@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {FormControl, Validators} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {ComponentItem, ComponentService} from "../../../component.service";
 import {ToastrService} from "ngx-toastr";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
@@ -13,8 +13,10 @@ export class ComponentFormComponent implements OnInit {
   viewMode: boolean = false;
   name!: string;
   type: any;
-  componentControl = new FormControl<ComponentItem | null>(null, Validators.required);
-  selectFormControl = new FormControl('', Validators.required);
+  formGroup = new FormGroup({
+    name: new FormControl('',Validators.required),
+    type: new FormControl('',Validators.required)
+  })
   animals: ComponentItem[] = [
     {id:0,name: 'Zużyciowy', typ: '',active:""},
     {id:0,name: 'Oddanie', typ: '',active:""},

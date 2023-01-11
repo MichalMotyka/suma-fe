@@ -5,6 +5,8 @@ import {ComponentItem, ComponentService} from "../../../component.service";
 import {ToastrService} from "ngx-toastr";
 import {MAT_DIALOG_DATA, MatDialog} from "@angular/material/dialog";
 import {Kontrahent} from "../../../service/kontrahent.service";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-tariff-form',
@@ -12,8 +14,11 @@ import {Kontrahent} from "../../../service/kontrahent.service";
   styleUrls: ['./tariff-form.component.css']
 })
 export class TariffFormComponent implements  OnInit{
-
+  formGroup = new FormGroup({
+    name: new FormControl('',Validators.required)
+  })
   constructor(@Inject(MAT_DIALOG_DATA) data: {component:Tariff,viewMode:boolean},private tariffService:TariffService,private componentService:ComponentService, private toaster:ToastrService,private dialog:MatDialog) {
+
     this.viewMode = data.viewMode;
     this.componentService.getAll().subscribe(value => {
       value.componentList.forEach(data => {
@@ -37,7 +42,9 @@ export class TariffFormComponent implements  OnInit{
         })
       }
     });
-
+  }
+  validateTable(){
+    return this.done.length === 0
   }
 
   todo:string[] = [];
