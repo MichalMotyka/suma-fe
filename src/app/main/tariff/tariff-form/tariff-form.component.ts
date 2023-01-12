@@ -29,6 +29,7 @@ export class TariffFormComponent implements  OnInit{
       })
 
       if (data.viewMode){
+        this.formGroup.get("name")?.disable()
         this.name = data.component.name;
         data.component.component_id.forEach(value => {
           this.dic.forEach(dic=>{

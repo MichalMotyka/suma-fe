@@ -1,48 +1,61 @@
-<div class="container">
-  <div class="input-group flex-nowrap mb-3">
-    <span class="input-group-text">Odbiorca</span>
-    <input class="typeahead-format" type="text" class="form-control" [(ngModel)]="numerKlienta" (ngModelChange)="setAdres()" [disabled]="viewMode" [ngbTypeahead]="search"
-           [resultFormatter]="formatter"/>
+<form [formGroup]="formGroup">
+  <div class="container">
+    <div class="input-group flex-nowrap mb-3">
+      <span class="input-group-text">Odbiorca</span>
+      <input class="typeahead-format" type="text" class="form-control" [(ngModel)]="numerKlienta"
+             (ngModelChange)="setAdres()" [ngbTypeahead]="search"
+             [resultFormatter]="formatter" formControlName="contractor"/>
+    </div>
+    <span *ngIf="formGroup.get('contractor')?.invalid && formGroup.get('contractor')?.touched" class="input-group flex-nowrap mb-2" style="color:red;">Kontrahent nie może być pusty</span>
+    <div class="input-group flex-nowrap mb-3">
+      <span class="input-group-text">Adres</span>
+      <input type="text" class="form-control" placeholder="" aria-label="Username" [(ngModel)]="adres" [disabled]="true" [ngModelOptions]="{standalone: true}"
+             aria-describedby="addon-wrapping" >
+    </div>
+    <div class="input-group flex-nowrap mb-3">
+      <span class="input-group-text">Platnik</span>
+      <input class="typeahead-format" type="text" class="form-control" [(ngModel)]="numberPlatnika"
+             (ngModelChange)="validPayer()" [ngbTypeahead]="payerSearch" formControlName="payer"
+             [resultFormatter]="formatter"/>
+    </div>
+    <span *ngIf="formGroup.get('payer')?.invalid && formGroup.get('payer')?.touched" class="input-group flex-nowrap mb-2" style="color:red;">Płatnik nie może być pusty</span>
+    <label class="mb-1">Data rozpoczęcia umowy</label><br>
+    <mat-form-field appearance="fill">
+      <mat-label>Wybierz datę</mat-label>
+      <input matInput [matDatepicker]="picker" [(ngModel)]="data" formControlName="date">
+      <mat-datepicker-toggle matSuffix [for]="picker" [disabled]="viewMode"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <br>
+    <div class="input-group flex-nowrap mb-3">
+      <span class="input-group-text">Data zakończenia</span>
+      <input type="text" class="form-control" placeholder="" aria-label="Username" [(ngModel)]="endDate" [ngModelOptions]="{standalone: true}"
+             [disabled]="true" aria-describedby="addon-wrapping">
+    </div>
+    <div class="input-group flex-nowrap mb-3">
+      <span class="input-group-text">Taryfa</span>
+      <input class="typeahead-format" type="text" class="form-control" [(ngModel)]="taryfa" formControlName="tarif"
+             (ngModelChange)="validTarif()" (change)="setPriceDic()" [ngbTypeahead]="tarifSearch"
+             [resultFormatter]="formatter"/>
+    </div>
+    <span *ngIf="formGroup.get('tarif')?.invalid && formGroup.get('tarif')?.touched" class="input-group flex-nowrap mb-2" style="color:red;">Nazwa taryfy nie może być pusta</span>
+    <div class="input-group flex-nowrap mb-3">
+      <span class="input-group-text">Cennik</span>
+      <input class="typeahead-format" type="text" class="form-control" [(ngModel)]="cennik" formControlName="price"
+             (ngModelChange)="validPrice()" [ngbTypeahead]="priceSearch"
+             [resultFormatter]="formatter"/>
+    </div>
+    <span *ngIf="formGroup.get('price')?.invalid && formGroup.get('price')?.touched" class="input-group flex-nowrap mb-2" style="color:red;">Nazwa cennika nie może być pusta</span>
+    <div class="input-group flex-nowrap mb-3">
+      <span class="input-group-text">Fazowość</span>
+      <input class="typeahead-format" type="text" class="form-control" [(ngModel)]="fazowosc" [ngbTypeahead]="fazSearch" formControlName="faz"
+             [resultFormatter]="formatter"/>
+    </div>
+    <span *ngIf="formGroup.get('faz')?.invalid && formGroup.get('faz')?.touched" class="input-group flex-nowrap mb-2" style="color:red;">Fazowość nie może być pusta</span>
   </div>
-  <div class="input-group flex-nowrap mb-3">
-    <span class="input-group-text">Adres</span>
-    <input type="text" class="form-control" placeholder="" aria-label="Username" [(ngModel)]="adres" [disabled]="true" aria-describedby="addon-wrapping">
-  </div>
-  <div class="input-group flex-nowrap mb-3">
-    <span class="input-group-text">Platnik</span>
-    <input class="typeahead-format" type="text" class="form-control" [(ngModel)]="numberPlatnika"  (ngModelChange)="validPayer()" [disabled]="viewMode" [ngbTypeahead]="payerSearch"
-           [resultFormatter]="formatter"/>
-  </div>
-  <label class="mb-1">Data rozpoczęcia umowy</label><br>
-  <mat-form-field appearance="fill">
-    <mat-label>Wybierz datę</mat-label>
-    <input matInput [matDatepicker]="picker" [(ngModel)]="data" [disabled]="viewMode">
-    <mat-datepicker-toggle matSuffix [for]="picker" [disabled]="viewMode"></mat-datepicker-toggle>
-    <mat-datepicker #picker></mat-datepicker>
-  </mat-form-field><br>
-  <div class="input-group flex-nowrap mb-3">
-    <span class="input-group-text">Data zakończenia</span>
-    <input type="text" class="form-control" placeholder="" aria-label="Username" [(ngModel)]="endDate" [disabled]="true" aria-describedby="addon-wrapping">
-  </div>
-  <div class="input-group flex-nowrap mb-3">
-    <span class="input-group-text">Taryfa</span>
-    <input class="typeahead-format" type="text" class="form-control" [(ngModel)]="taryfa" (ngModelChange)="validTarif()" (change)="setPriceDic()" [disabled]="viewMode" [ngbTypeahead]="tarifSearch"
-           [resultFormatter]="formatter"/>
-  </div>
-  <div class="input-group flex-nowrap mb-3">
-    <span class="input-group-text">Cennik</span>
-    <input class="typeahead-format" type="text" class="form-control" [(ngModel)]="cennik" (ngModelChange)="validPrice()" [disabled]="viewMode" [ngbTypeahead]="priceSearch"
-           [resultFormatter]="formatter"/>
-  </div>
-  <div class="input-group flex-nowrap mb-3">
-    <span class="input-group-text">Fazowość</span>
-    <input class="typeahead-format" type="text" class="form-control" [(ngModel)]="fazowosc" [disabled]="viewMode" [ngbTypeahead]="fazSearch"
-           [resultFormatter]="formatter"/>
-  </div>
-  <div class="float-end">
-    <button [hidden]="viewMode" class="btn btn-success m-1" *ngIf="!editMode" (click)="save()">Zatwierdź</button>
-    <button [hidden]="viewMode" class="btn btn-success m-1" *ngIf="editMode" (click)="edit()">Zatwierdź</button>
-    <button class="btn btn-danger m-1" mat-dialog-close="kontrahent-form">Anuluj</button>
-  </div>
-
+</form>
+<div class="float-end">
+  <button [hidden]="viewMode" class="btn btn-success m-1" *ngIf="!editMode" [disabled]="formGroup?.invalid" (click)="save()">Zatwierdź</button>
+  <button [hidden]="viewMode" class="btn btn-success m-1" *ngIf="editMode" [disabled]="formGroup?.invalid" (click)="edit()">Zatwierdź</button>
+  <button class="btn btn-danger m-1" mat-dialog-close="kontrahent-form">Anuluj</button>
 </div>

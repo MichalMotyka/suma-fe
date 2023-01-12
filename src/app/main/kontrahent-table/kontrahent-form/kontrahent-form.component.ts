@@ -7,6 +7,7 @@ import {Kontrahent, KontrahentService} from "../../../service/kontrahent.service
 import {ToastrService} from "ngx-toastr";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {PP, PpeService} from "../../../ppe.service";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-kontrahent-form',
@@ -28,10 +29,24 @@ export class KontrahentFormComponent implements OnInit {
   states:string[] = [];
   dic:any [][] = []
   viewMode!:boolean;
+  formGroup = new FormGroup({
+    name: new FormControl('',Validators.required),
+    adres: new FormControl('',Validators.required),
+    ul: new FormControl('',Validators.required),
+    koresadres: new FormControl('',Validators.required),
+    koresul: new FormControl('',Validators.required)
+  })
 
   formatter = (result: string) => result.toUpperCase();
 
   constructor(@Inject(MAT_DIALOG_DATA) data: {row:Kontrahent,viewMode:boolean,editMode:boolean},private adresService:AdresService,private kontrahenService:KontrahentService,private toaster:ToastrService,private dialog:MatDialogRef<any>,private ppeService:PpeService) {
+    if (data.viewMode){
+      this.formGroup.get("name")?.disable()
+      this.formGroup.get("adres")?.disable()
+      this.formGroup.get("ul")?.disable()
+      this.formGroup.get("koresadres")?.disable()
+      this.formGroup.get("koresul")?.disable()
+    }
     this.viewMode =data.viewMode;
     if (data.viewMode || data.editMode){
       this.mapper(data.row)

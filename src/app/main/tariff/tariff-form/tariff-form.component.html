@@ -1,7 +1,7 @@
 <form [formGroup]="formGroup">
 <div class="input-group flex-nowrap mb-3">
   <span class="input-group-text">Nazwa</span>
-  <input type="text" class="form-control" placeholder="Nazwa" [disabled]="viewMode" [(ngModel)]="name" aria-label="Username" aria-describedby="addon-wrapping" formControlName="name">
+  <input type="text" class="form-control" placeholder="Nazwa"  [(ngModel)]="name" aria-label="Username" aria-describedby="addon-wrapping" formControlName="name">
 </div>
   <span *ngIf="formGroup.get('name')?.invalid && formGroup.get('name')?.touched" class="input-group flex-nowrap mb-2" style="color:red;">Nazwa taryfy nie może być pusta</span>
 <div class="example-container">

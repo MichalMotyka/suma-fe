@@ -9,6 +9,7 @@ import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog
 import {ContractItem, ContractService} from "../../../contract.service";
 import {logMessages} from "@angular-devkit/build-angular/src/builders/browser-esbuild/esbuild";
 import {ToastrService} from "ngx-toastr";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-contract-form',
@@ -45,9 +46,25 @@ export class ContractFormComponent implements OnInit {
   ot!: number;
   status!: string;
   editMode:boolean = false;
+  formGroup = new FormGroup({
+    contractor: new FormControl('',Validators.required),
+    payer: new FormControl('',Validators.required),
+    date: new FormControl('',Validators.required),
+    tarif: new FormControl('',Validators.required),
+    price: new FormControl('',Validators.required),
+    faz: new FormControl('',Validators.required)
+  })
 
   constructor(@Inject(MAT_DIALOG_DATA) data: {row:ContractItem,viewMode:boolean,editMode:boolean}, private toaster:ToastrService,private contractorServis:KontrahentService,private tarifService:TariffService,private priceService:PriceService,private adresService:AdresService,private dialog:MatDialogRef<any>,private contractorService:ContractService) {
     dialog.disableClose = true;
+    if (data.viewMode){
+      this.formGroup.get("contractor")?.disable()
+      this.formGroup.get("payer")?.disable()
+      this.formGroup.get("date")?.disable()
+      this.formGroup.get("tarif")?.disable()
+      this.formGroup.get("price")?.disable()
+      this.formGroup.get("faz")?.disable()
+    }
     if (data.viewMode || data.editMode){
       this.id = data.row.id;
       this.viewMode = data.viewMode
