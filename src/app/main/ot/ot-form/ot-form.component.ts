@@ -43,7 +43,7 @@ export class OtFormComponent implements OnInit {
   viewMode: boolean = false;
   editMode: boolean = false;
   formatter = (result: string) => result.toUpperCase();
-  form!:FormGroup;
+  form!:FormGroup
   constructor(@Inject(MAT_DIALOG_DATA) data: { row: ot, viewMode: boolean, editMode: boolean }, private fb: FormBuilder, private ppService: PpeService, private meterService: MeterService, private contractService: ContractService, private contracotrService: KontrahentService, private otService: OtService, private toaster: ToastrService, private dialog: MatDialog) {
     this.viewMode = data.viewMode
     this.editMode = data.editMode;
@@ -71,6 +71,7 @@ export class OtFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.fb.group({
+      pp:new FormControl("",Validators.required),
       actionSelection:new FormControl(null, Validators.required)
     });
     this.form.get("actionSelection")?.setValue(this.selectAction)

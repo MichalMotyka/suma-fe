@@ -1,20 +1,21 @@
-<div class="container">
+<div class="container" [formGroup]="form">
   <div class="input-group flex-nowrap mb-3">
     <span class="input-group-text">Numer OT</span>
-    <input type="text" class="form-control" placeholder="000000000" aria-label="Username" [(ngModel)]="ot" [disabled]="true" aria-describedby="addon-wrapping">
+    <input type="text" class="form-control" placeholder="000000000" aria-label="Username" [(ngModel)]="ot" [ngModelOptions]="{standalone: true}" [disabled]="true" aria-describedby="addon-wrapping">
   </div>
   <div class="input-group flex-nowrap mb-3">
     <span class="input-group-text">PP</span>
-    <input class="typeahead-format" type="text" class="form-control" [(ngModel)]="ppModel" (ngModelChange)="loadPP()" [disabled]="viewMode" [ngbTypeahead]="search"
+    <input class="typeahead-format" type="text" class="form-control" formControlName="pp" [(ngModel)]="ppModel" (ngModelChange)="loadPP()" [disabled]="viewMode" [ngbTypeahead]="search"
            [resultFormatter]="formatter"/>
   </div>
+  <span *ngIf="form.get('pp')?.invalid && form.get('pp')?.touched" class="input-group flex-nowrap mb-2" style="color:red;">Punkt poboru nie może być pusty</span>
   <div class="input-group flex-nowrap mb-3">
     <span class="input-group-text">Kontrahent</span>
-    <input type="text" class="form-control" placeholder="000000000" aria-label="Username" [(ngModel)]="contractor" [disabled]="true" aria-describedby="addon-wrapping">
+    <input type="text" class="form-control" placeholder="000000000" aria-label="Username" [ngModelOptions]="{standalone: true}" [(ngModel)]="contractor" [disabled]="true" aria-describedby="addon-wrapping">
   </div>
   <div class="input-group flex-nowrap mb-3">
     <span class="input-group-text">Umowa</span>
-    <input type="text" class="form-control" placeholder="000000000" aria-label="Username" [(ngModel)]="contract" [disabled]="true" aria-describedby="addon-wrapping">
+    <input type="text" class="form-control" placeholder="000000000" aria-label="Username" [ngModelOptions]="{standalone: true}" [(ngModel)]="contract" [disabled]="true" aria-describedby="addon-wrapping">
   </div>
   <div class="input-group flex-nowrap mb-3">
     <span class="input-group-text">Numer licznika</span>
@@ -23,21 +24,21 @@
   </div>
   <div class="input-group flex-nowrap mb-3" [hidden]="!replaceMetter">
     <span class="input-group-text">Nowy licznik</span>
-    <input class="typeahead-format" type="text" class="form-control" [(ngModel)]="replacedMetter" [disabled]="false" [ngbTypeahead]="searchMetter"
+    <input class="typeahead-format" type="text" class="form-control" [(ngModel)]="replacedMetter" [ngModelOptions]="{standalone: true}" [disabled]="false"  [ngbTypeahead]="searchMetter"
            [resultFormatter]="formatter"/>
   </div>
   <label class="mb-1">Data wykonania</label><br>
   <mat-form-field appearance="fill">
     <mat-label>Wybierz datę</mat-label>
-    <input matInput [matDatepicker]="picker" [(ngModel)]="data" [disabled]="viewMode">
+    <input matInput [matDatepicker]="picker" [(ngModel)]="data" [ngModelOptions]="{standalone: true}" [disabled]="viewMode">
     <mat-datepicker-toggle matSuffix [for]="picker" ></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field><br>
 
   <mat-form-field appearance="fill" [formGroup]="form">
     <mat-label>Akcja</mat-label>
-    <mat-select (selectionChange)="setAction($event.value)" formControlName="actionSelection" [disabled]="viewMode">
-      <mat-option *ngFor="let actions of action" [value]="actions.value">
+    <mat-select (selectionChange)="setAction($event.value)"  formControlName="actionSelection" [disabled]="viewMode">
+      <mat-option *ngFor="let actions of action"  [value]="actions.value">
         {{actions.name}}
       </mat-option>
     </mat-select>
