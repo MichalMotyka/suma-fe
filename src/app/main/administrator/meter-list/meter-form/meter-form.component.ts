@@ -26,6 +26,9 @@ export class MeterFormComponent implements OnInit {
   formatter = (result: string) => result.toUpperCase();
   constructor(@Inject(MAT_DIALOG_DATA) data: {viewMode: boolean,row:Meter},private meterService:MeterService,private dialog:MatDialog,private toaster:ToastrService) {
     if(data.viewMode){
+      this.formGroup.get('name')?.disable()
+      this.formGroup.get('model')?.disable()
+      this.formGroup.get('faz')?.disable()
       this.name = data.row.name;
       this.fazowosc = data.row.faz;
       this.model = data.row.model

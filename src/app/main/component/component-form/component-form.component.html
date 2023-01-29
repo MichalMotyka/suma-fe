@@ -7,8 +7,8 @@
   <mat-error class="input-group flex-nowrap mb-2" *ngIf="formGroup.get('name')?.invalid && formGroup.get('name')?.touched">Proszę wybrać typ składnika</mat-error>
   <div class="input-group flex-nowrap mb-3" *ngIf="viewMode">
     <span class="input-group-text">Typ</span>
-    <input type="text" class="form-control" placeholder="Nazwa" [disabled]="!viewMode" [(ngModel)]="type"
-           aria-label="Username" aria-describedby="addon-wrapping">
+    <input type="text" class="form-control" placeholder="Nazwa" [disabled]="viewMode" [(ngModel)]="type"
+           aria-label="Username"  aria-describedby="addon-wrapping" [ngModelOptions]="{standalone: true}">
   </div>
   <div class="input-group flex-nowrap mb-3" *ngIf="!viewMode">
     <mat-form-field appearance="fill">

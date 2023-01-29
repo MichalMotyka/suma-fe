@@ -11,22 +11,25 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 })
 export class AdresFormComponent implements OnInit {
 
-  viewMode:boolean;
-  name!:string;
-  GUS!:string;
-  service:AdresService;
+  viewMode: boolean;
+  name!: string;
+  GUS!: string;
+  service: AdresService;
   formGroup = new FormGroup({
-      name:new FormControl('',Validators.required),
-      gus:new FormControl('',[Validators.required]),
-      kraj:new FormControl('',Validators.required)
+    name: new FormControl('', Validators.required),
+    gus: new FormControl('', [Validators.required]),
+    kraj: new FormControl('', Validators.required)
   })
 
-  constructor(@Inject(MAT_DIALOG_DATA) data:{rows:any,viewMode: boolean,service:AdresService},private toaster: ToastrService,private dialog:MatDialog) {
+  constructor(@Inject(MAT_DIALOG_DATA) data: { rows: any, viewMode: boolean, service: AdresService }, private toaster: ToastrService, private dialog: MatDialog) {
     this.viewMode = data.viewMode;
     this.service = data.service;
-    if(this.viewMode){
-        this.name = data.rows.name;
-        this.GUS = data.rows.gus;
+    if (this.viewMode) {
+      this.formGroup.get('name')?.disable()
+      this.formGroup.get('gus')?.disable()
+      this.formGroup.get('kraj')?.disable()
+      this.name = data.rows.name;
+      this.GUS = data.rows.gus;
     }
   }
 
@@ -34,16 +37,16 @@ export class AdresFormComponent implements OnInit {
   }
 
   create() {
-    this.service.createState(new Adres(0,this.name,this.GUS,"województwo","T","","")).subscribe(value => {
-      if(value.status == 201){
-        this.toaster.success("Pomyslnie dodano województwo do słownika","Sukces",{
+    this.service.createState(new Adres(0, this.name, this.GUS, "województwo", "T", "", "")).subscribe(value => {
+      if (value.status == 201) {
+        this.toaster.success("Pomyslnie dodano województwo do słownika", "Sukces", {
           timeOut: 3000,
           progressBar: true,
           progressAnimation: "decreasing"
         })
         this.dialog.closeAll();
-      }else{
-        this.toaster.error("Nie udało się utworzyć województwa, wartość już istnieje","Błąd",{
+      } else {
+        this.toaster.error("Nie udało się utworzyć województwa, wartość już istnieje", "Błąd", {
           timeOut: 3000,
           progressBar: true,
           progressAnimation: "decreasing"

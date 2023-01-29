@@ -29,6 +29,6 @@
            [disabled]="viewMode" aria-label="Username" aria-describedby="addon-wrapping" formControlName="post_code">
   </div>
   <span *ngIf="formGroup.get('post_code')?.invalid && formGroup.get('post_code')?.touched" class="input-group flex-nowrap mb-2" style="color:red;">Kod pczotowy nie może być pusty oraz musi być zgodna z formatem 00-000</span>
-  <button class="btn btn-success me-3" [disabled]="formGroup?.invalid" (click)="create()">Zatwierdź</button>
+  <button class="btn btn-success me-3" [disabled]="formGroup?.invalid"  [hidden]="viewMode" (click)="create()">Zatwierdź</button>
   <button class="btn btn-danger" [matDialogClose]="this">Anuluj</button>
 </form>

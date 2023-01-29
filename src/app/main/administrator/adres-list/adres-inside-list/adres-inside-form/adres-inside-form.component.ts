@@ -33,6 +33,11 @@ export class AdresInsideFormComponent implements OnInit {
     this.instance = data.instance;
     this.viewMode = data.viewMode;
     if (this.viewMode){
+      this.formGroup.get('name')?.disable()
+      this.formGroup.get('gus')?.disable()
+      this.formGroup.get('post')?.disable()
+      this.formGroup.get('post_code')?.disable()
+      this.formGroup.get('type')?.disable()
       this.name = data.rows.name;
       this.gus = data.rows.gus;
       this.type = data.rows.type;

@@ -20,7 +20,7 @@
   <div class="input-group flex-nowrap mb-3">
     <span class="input-group-text">Numer licznika</span>
     <input class="typeahead-format" type="text" class="form-control" [(ngModel)]="meter" [disabled]="!newMetter" [ngbTypeahead]="searchMetter"
-           [resultFormatter]="formatter"/>
+           [resultFormatter]="formatter" [ngModelOptions]="{standalone: true}"/>
   </div>
   <div class="input-group flex-nowrap mb-3" [hidden]="!replaceMetter">
     <span class="input-group-text">Nowy licznik</span>

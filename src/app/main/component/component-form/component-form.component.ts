@@ -23,6 +23,8 @@ export class ComponentFormComponent implements OnInit {
   ];
   constructor(@Inject(MAT_DIALOG_DATA) data: {component:ComponentItem,viewMode:boolean},private componentService:ComponentService,private toaster:ToastrService,private dialog:MatDialogRef<any>) {
     if (data.viewMode){
+      this.formGroup.get('name')?.disable()
+      this.formGroup.get('type')?.disable()
       this.viewMode = data.viewMode
       this.name = data.component.name
       this.type = data.component.typ

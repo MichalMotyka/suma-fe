@@ -57,7 +57,7 @@ export class CountryFormComponent implements OnInit {
     countryName:new FormControl('',Validators.required),
     prefix: new FormControl('',[Validators.required,Validators.max(4)]),
     maskaGus: new FormControl('',[Validators.required,Validators.pattern('A*0*-*')]),
-    maskaKodu: new FormControl('',[Validators.required,Validators.pattern('A*0*-*')])
+    maskaKodu: new FormControl('',[Validators.required])
   })
 
   constructor(
@@ -80,17 +80,16 @@ export class CountryFormComponent implements OnInit {
   }
 
   save() {
-    console.log(this.countryFormV.value)
-    // if (this.name.length > 4, this.prefix.length > 1) {
-    //   this.addNewCountry(new CountryItem(0, this.name, this.prefix, this.gusMask, this.postMask));
-    //   this.dialog.closeAll();
-    // } else {
-    //   this.toaster.error("Błędnie wypełniono formularz, dane nie zostały zapisane", "Błąd", {
-    //     timeOut: 3000,
-    //     progressBar: true,
-    //     progressAnimation: "decreasing"
-    //   })
-    // }
+    if (this.name.length > 4, this.prefix.length > 1) {
+      this.addNewCountry(new CountryItem(0, this.name, this.prefix, this.gusMask, this.postMask));
+      this.dialog.closeAll();
+    } else {
+      this.toaster.error("Błędnie wypełniono formularz, dane nie zostały zapisane", "Błąd", {
+        timeOut: 3000,
+        progressBar: true,
+        progressAnimation: "decreasing"
+      })
+    }
   }
 
   addNewCountry(value: CountryItem) {

@@ -44,6 +44,8 @@ export class FormComponent implements OnInit {
   constructor(@Inject(MAT_DIALOG_DATA) data: {row:Price[],viewMode:boolean},private dialogRef:MatDialogRef<any>,private priceService:PriceService,private toaster:ToastrService,private dialog:MatDialog,private tariffService:TariffService,private componentService:ComponentService) {
     dialogRef.disableClose = true;
     if (data.viewMode){
+      this.formGroup.get('name')?.disable()
+      this.formGroup.get('type')?.disable()
       this.viewMode = data.viewMode;
       this.name = data.row[0].name;
       this.tarifInputName = data.row[0].tarif_name;

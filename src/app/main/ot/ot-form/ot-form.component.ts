@@ -74,6 +74,9 @@ export class OtFormComponent implements OnInit {
       pp:new FormControl("",Validators.required),
       actionSelection:new FormControl(null, Validators.required)
     });
+    if (this.viewMode){
+      this.form.get('pp')?.disable()
+    }
     this.form.get("actionSelection")?.setValue(this.selectAction)
 
     this.ppService.getAll().subscribe(value => {
