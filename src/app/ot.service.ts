@@ -37,4 +37,7 @@ export class OtService {
   veryfication(ot:ot){
     return this.http.put<CountryCreateResponse>(`${environment.url}/api/v1/ot/veryfy`,ot)
   }
+  search(value:string){
+    return this.http.get<otList>(`${environment.url}/api/v1/ot/search?data=`+value)
+  }
 }

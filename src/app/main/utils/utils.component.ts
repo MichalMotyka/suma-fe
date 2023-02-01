@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {MatDialog} from "@angular/material/dialog";
 import {CountryComponent} from "../administrator/country-list/country.component";
 import {KontrahentTableComponent} from "../kontrahent-table/kontrahent-table.component";
+import {SharedService} from "./shared/shared.service";
 
 @Component({
   selector: 'app-utils',
@@ -11,9 +12,14 @@ import {KontrahentTableComponent} from "../kontrahent-table/kontrahent-table.com
 export class UtilsComponent implements OnInit {
 
   @Input() module!:any
-  constructor(private dialogRef: MatDialog) { }
+  value!: string;
+  constructor(private dialogRef: MatDialog,private sharedService:SharedService) { }
 
   ngOnInit(): void {
+  }
+
+  search(){
+    this.sharedService.sendClickEvent(this.value)
   }
 
   add() {

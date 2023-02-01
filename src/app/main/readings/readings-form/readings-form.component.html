@@ -1,8 +1,9 @@
 <div class="input-group flex-nowrap mb-3" style="min-width: 400px;">
   <span class="input-group-text">PP</span>
-  <input class="typeahead-format" type="text" class="form-control" [(ngModel)]="contractorModel" (ngModelChange)="loadContractors()" [disabled]="viewMode" [ngbTypeahead]="search"
+  <input class="typeahead-format" type="text" class="form-control" id="t" [(ngModel)]="contractorModel" (ngModelChange)="loadContractors()" [disabled]="viewMode" [ngbTypeahead]="search"
          [resultFormatter]="formatter"/>
 </div>
+<span *ngIf="pphasError && ppcounter != 0"  class="input-group flex-nowrap mb-2" style="color:red;">Punkt poboru nie może być pusty oraz musi być wybrany ze słownika</span>
 <div class="input-group flex-nowrap mb-3">
   <span class="input-group-text">Numer OT</span>
   <input type="text" class="form-control" placeholder="000000000" aria-label="Username" value="{{contractUId}}" [disabled]="true" aria-describedby="addon-wrapping">
@@ -10,9 +11,10 @@
 <label class="mb-1">Data odczytu</label><br>
 <mat-form-field appearance="fill">
   <mat-label>Wybierz datę</mat-label>
-  <input matInput [matDatepicker]="picker" [(ngModel)]="data" [disabled]="viewMode">
+  <input matInput [matDatepicker]="picker" [(ngModel)]="data" [disabled]="viewMode" (dateChange)="dataHasErrpr($event)">
   <mat-datepicker-toggle matSuffix [for]="picker" [disabled]="viewMode"></mat-datepicker-toggle>
   <mat-datepicker #picker></mat-datepicker>
 </mat-form-field><br>
+<span *ngIf="dataError && datacounter != 0"  class="input-group flex-nowrap mb-2" style="color:red;">Data nie może być pusta</span>
 <app-readings-table [contract]="contract" [readingId]="readingsId" (eventTask)="getData($event)"></app-readings-table>
-<button [hidden]="viewMode" class="btn btn-success mt-3"  (click)="save()">Zatwierdź</button>
+<button [hidden]="viewMode" [disabled]="dataError || pphasError" class="btn btn-success mt-3" (click)="save()">Zatwierdź</button>

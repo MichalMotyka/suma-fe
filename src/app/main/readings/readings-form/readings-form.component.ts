@@ -7,6 +7,7 @@ import {TableSchema} from "./readings-table/readings-table.component";
 import {ReadingItem, Readings, ReadingsService} from "../../../readings.service";
 import {ToastrService} from "ngx-toastr";
 import {MAT_DIALOG_DATA, MatDialog} from "@angular/material/dialog";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-readings-form',
@@ -14,6 +15,10 @@ import {MAT_DIALOG_DATA, MatDialog} from "@angular/material/dialog";
   styleUrls: ['./readings-form.component.css']
 })
 export class ReadingsFormComponent implements OnInit {
+  pphasError: boolean = false;
+  ppcounter =0;
+  dataError: boolean = true;
+  datacounter = 0;
   viewMode: boolean = false;
   data: any;
   contractor: string[]=[];
@@ -61,13 +66,19 @@ export class ReadingsFormComponent implements OnInit {
     );
 
 
+
   loadContractors() {
+    this.ppcounter++
     if (this.contractorModel.charAt(this.contractorModel.length-1) === ')') {
       this.contractService.getByContractor(this.contractorModel.split(" (")[0]).subscribe(value => {
         this.contract = value
         this.contractUId = value.uid
       })
+      this.pphasError = false
+    }else {
+      this.pphasError = true
     }
+
   }
 
   save() {
@@ -102,5 +113,12 @@ export class ReadingsFormComponent implements OnInit {
 
   getData(event: TableSchema[]) {
     this.tableData = event;
+  }
+
+  dataHasErrpr(event:any) {
+    this.datacounter++
+    if (event.value != null){
+      this.dataError = false;
+    }
   }
 }

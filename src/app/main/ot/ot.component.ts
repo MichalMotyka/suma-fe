@@ -9,6 +9,7 @@ import {Subscription} from "rxjs";
 import {OtService} from "../../ot.service";
 import {MatDialog} from "@angular/material/dialog";
 import {OtConfirmComponent} from "./ot-confirm/ot-confirm.component";
+import {SharedService} from "../utils/shared/shared.service";
 
 @Component({
   selector: 'app-ot',
@@ -19,11 +20,25 @@ export class OtComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatTable) table!: MatTable<ContractList>;
-  dataSource:any;
+  dataSource: any;
   formModule: any = OtFormComponent;
-  displayedColumns = ['id', 'name','actions'];
+  displayedColumns = ['id', 'name', 'actions'];
   private subcription!: Subscription;
-  constructor(private otService:OtService,private dialog:MatDialog) {
+  private searchSub!: Subscription;
+
+  constructor(private otService: OtService, private dialog: MatDialog, private sharedService: SharedService) {
+    this.searchSub = this.sharedService.getClieckEvent().subscribe(value => {
+      if (value != '' && value != undefined) {
+        otService.search(value).subscribe(data => {
+          this.dataSource = new MatTableDataSource(data.otList);
+          this.dataSource.sort = this.sort;
+          this.dataSource.paginator = this.paginator;
+        })
+      }else {
+        this.addValue()
+      }
+    })
+
     dialog.afterAllClosed.subscribe(value => {
       this.subcription.unsubscribe;
       this.addValue()
@@ -34,7 +49,7 @@ export class OtComponent implements OnInit {
     this.addValue();
   }
 
-  addValue(){
+  addValue() {
     this.subcription = this.otService.getAll().subscribe({
       next: value => {
         this.dataSource = new MatTableDataSource(value.otList);
@@ -44,22 +59,23 @@ export class OtComponent implements OnInit {
     })
   }
 
-  remove(row:any) {
-    this.dialog.open(OtConfirmComponent,{data:{row:row,veryfy:false,confrim:false}})
+  remove(row: any) {
+    this.dialog.open(OtConfirmComponent, {data: {row: row, veryfy: false, confrim: false}})
   }
 
-  view(row:any) {
-    this.dialog.open(OtFormComponent,{data:{row:row,viewMode:true,editMode:false}})
+  view(row: any) {
+    this.dialog.open(OtFormComponent, {data: {row: row, viewMode: true, editMode: false}})
   }
 
-  edit(row:any) {
-    this.dialog.open(OtFormComponent,{data:{row:row,viewMode:false,editMode:true}})
+  edit(row: any) {
+    this.dialog.open(OtFormComponent, {data: {row: row, viewMode: false, editMode: true}})
   }
 
-  veryfication(row:any) {
-    this.dialog.open(OtConfirmComponent,{data:{row:row,veryfy:true,confrim:false}})
+  veryfication(row: any) {
+    this.dialog.open(OtConfirmComponent, {data: {row: row, veryfy: true, confrim: false}})
   }
-  confirm(row:any) {
-    this.dialog.open(OtConfirmComponent,{data:{row:row,veryfy:false,confrim:true}})
+
+  confirm(row: any) {
+    this.dialog.open(OtConfirmComponent, {data: {row: row, veryfy: false, confrim: true}})
   }
 }
