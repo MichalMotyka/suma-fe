@@ -10,6 +10,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {Tariff, TariffList, TariffService} from "../../tariff.service";
 import {TariffFormComponent} from "./tariff-form/tariff-form.component";
 import {TariffConfirmComponent} from "./tariff-confirm/tariff-confirm.component";
+import {SharedService} from "../utils/shared/shared.service";
 
 @Component({
   selector: 'app-tariff',
@@ -24,8 +25,19 @@ export class TariffComponent implements OnInit {
   displayedColumns = ['name', 'tarif_id','actions'];
   formModule: any = TariffFormComponent;
   private subcription!: Subscription;
-
-  constructor(private tariffService:TariffService,private dialog:MatDialog) {
+  private searchSub!: Subscription;
+  constructor(private tariffService:TariffService,private dialog:MatDialog, private sharedService: SharedService) {
+    this.searchSub = this.sharedService.getClieckEvent().subscribe(value => {
+      if (value != '' && value != undefined) {
+        tariffService.search(value).subscribe(data => {
+          this.dataSource = new MatTableDataSource(data.tarifList);
+          this.dataSource.sort = this.sort;
+          this.dataSource.paginator = this.paginator;
+        })
+      }else {
+        this.addValue()
+      }
+    })
     this.dialog.afterAllClosed.subscribe(value => {
       this.subcription.unsubscribe();
       this.addValue();

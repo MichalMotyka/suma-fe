@@ -38,4 +38,8 @@ export class TariffService {
   getByUid(uid:string){
     return this.http.get<TariffList>(`${environment.url}/api/v1/tariff/getByUid?uid=`+uid)
   }
+
+  search(value: string) {
+    return this.http.get<TariffList>(`${environment.url}/api/v1/tariff/search?data=`+value)
+  }
 }

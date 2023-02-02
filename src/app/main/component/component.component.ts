@@ -9,6 +9,7 @@ import {ComponentFormComponent} from "./component-form/component-form.component"
 import {MatDialog} from "@angular/material/dialog";
 import {AdresRemoveComponent} from "../administrator/adres-list/adres-remove/adres-remove.component";
 import {ComponentConfirmComponent} from "./component-confirm/component-confirm.component";
+import {SharedService} from "../utils/shared/shared.service";
 
 @Component({
   selector: 'app-component',
@@ -23,8 +24,19 @@ export class ComponentComponent implements OnInit {
   displayedColumns = ['id', 'name','actions'];
   formModule: any = ComponentFormComponent;
   private subcription!: Subscription;
-
-  constructor(private componentService:ComponentService,private dialog:MatDialog) {
+  private searchSub!: Subscription;
+  constructor(private componentService:ComponentService,private dialog:MatDialog,private sharedService: SharedService) {
+    this.searchSub = this.sharedService.getClieckEvent().subscribe(value => {
+      if (value != '' && value != undefined) {
+        componentService.search(value).subscribe(data => {
+          this.dataSource = new MatTableDataSource(data.componentList);
+          this.dataSource.sort = this.sort;
+          this.dataSource.paginator = this.paginator;
+        })
+      }else {
+        this.addValue()
+      }
+    })
     this.dialog.afterAllClosed.subscribe(value =>{
       this.subcription.unsubscribe();
       this.addValue();

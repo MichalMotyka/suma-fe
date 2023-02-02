@@ -42,4 +42,8 @@ export class PriceService {
   getById(id:string){
     return this.http.get<Price>(`${environment.url}/api/v1/price/get_by_id?id=`+id)
   }
+
+  search(value: string) {
+    return this.http.get<PriceList>(`${environment.url}/api/v1/price/search?data=`+value)
+  }
 }

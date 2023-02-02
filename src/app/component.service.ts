@@ -41,4 +41,8 @@ export class ComponentService {
   getById(id:number){
     return this.http.get<ComponentItem>(`${environment.url}/api/v1/component/get_by?id=`+id);
   }
+
+  search(value: string) {
+    return this.http.get<ComponentList>(`${environment.url}/api/v1/component/search?data=`+value)
+  }
 }

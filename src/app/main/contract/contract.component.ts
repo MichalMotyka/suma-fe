@@ -9,6 +9,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {Subscription} from "rxjs";
 import {ContractItem, ContractList, ContractService} from "../../contract.service";
 import {ContractConfirmComponent} from "./contract-confirm/contract-confirm.component";
+import {SharedService} from "../utils/shared/shared.service";
 
 @Component({
   selector: 'app-contract',
@@ -23,7 +24,19 @@ export class ContractComponent implements OnInit {
   formModule: any = ContractFormComponent;
   displayedColumns = ['id', 'name','actions'];
   private subcription!: Subscription;
-  constructor(private contractService:ContractService,private dialog:MatDialog) {
+  private searchSub!: Subscription;
+  constructor(private contractService:ContractService,private dialog:MatDialog,private sharedService: SharedService) {
+    this.searchSub = this.sharedService.getClieckEvent().subscribe(value => {
+      if (value != '' && value != undefined) {
+        contractService.search(value).subscribe(data => {
+          this.dataSource = new MatTableDataSource(data.contractList);
+          this.dataSource.sort = this.sort;
+          this.dataSource.paginator = this.paginator;
+        })
+      }else {
+        this.addValue()
+      }
+    })
     dialog.afterAllClosed.subscribe(value => {
       this.subcription.unsubscribe;
       this.addValue()

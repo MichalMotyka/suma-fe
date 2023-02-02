@@ -9,6 +9,8 @@ import {Price, PriceList, PriceService} from "../../price.service";
 import {FormComponent} from "./form/form.component";
 import {MatDialog} from "@angular/material/dialog";
 import {PriceConfirmComponent} from "./price-confirm/price-confirm.component";
+import {SharedService} from "../utils/shared/shared.service";
+import {preventOverflow} from "@popperjs/core";
 
 @Component({
   selector: 'app-price-list',
@@ -24,8 +26,19 @@ export class PriceListComponent implements OnInit {
   formModule: any = FormComponent;
   displayedColumns = ['name','tarif','actions'];
   private subcription!: Subscription;
-
-  constructor(private priceService:PriceService,private dialog:MatDialog) {
+  private searchSub!: Subscription;
+  constructor(private priceService:PriceService,private dialog:MatDialog,private sharedService: SharedService) {
+    this.searchSub = this.sharedService.getClieckEvent().subscribe(value => {
+      if (value != '' && value != undefined) {
+        priceService.search(value).subscribe(data => {
+          this.dataSource = new MatTableDataSource(data.PriceList);
+          this.dataSource.sort = this.sort;
+          this.dataSource.paginator = this.paginator;
+        })
+      }else {
+        this.addValue()
+      }
+    })
     this.dialog.afterAllClosed.subscribe(value => {
       this.subcription.unsubscribe();
       this.addValue();

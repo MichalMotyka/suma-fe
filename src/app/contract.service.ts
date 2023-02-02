@@ -57,4 +57,7 @@ export class ContractService {
   getByContractor(id:string){
     return this.http.get<ContractItem>(`${environment.url}/api/v1/contract/get_by_contractor?id=`+id)
   }
+  search(data:string){
+    return this.http.get<ContractList>(`${environment.url}/api/v1/contract/search?data=`+data);
+  }
 }
