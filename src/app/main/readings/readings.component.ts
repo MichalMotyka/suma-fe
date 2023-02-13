@@ -8,6 +8,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {ReadingsService} from "../../readings.service";
 import {ReadingsFormComponent} from "./readings-form/readings-form.component";
 import {ToastrService} from "ngx-toastr";
+import {SharedService} from "../utils/shared/shared.service";
 
 @Component({
   selector: 'app-readings',
@@ -22,7 +23,19 @@ export class ReadingsComponent implements OnInit {
   dataSource:any;
   displayedColumns = ['name','contractor','tarif','actions'];
   private subcription!: Subscription;
-  constructor(private dialog:MatDialog,private readingServices:ReadingsService,private toaster:ToastrService) {
+  private searchSub!: Subscription;
+  constructor(private dialog:MatDialog,private readingServices:ReadingsService,private toaster:ToastrService, private sharedService: SharedService) {
+    this.searchSub = this.sharedService.getClieckEvent().subscribe(value => {
+      if (value != '' && value != undefined) {
+        readingServices.search(value).subscribe(data => {
+          this.dataSource = new MatTableDataSource(data.readingList);
+          this.dataSource.sort = this.sort;
+          this.dataSource.paginator = this.paginator;
+        })
+      }else {
+        this.addValue()
+      }
+    })
     this.dialog.afterAllClosed.subscribe(value => {
       this.subcription.unsubscribe();
       this.addValue();

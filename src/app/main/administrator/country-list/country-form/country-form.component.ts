@@ -69,6 +69,10 @@ export class CountryFormComponent implements OnInit {
     this.viewMode = data.viewMode;
     if (this.viewMode){
       let row:CountryItem= countryForm.getCurrRow();
+      this.countryFormV.get('countryName')?.disable();
+      this.countryFormV.get('prefix')?.disable();
+      this.countryFormV.get('maskaKodu')?.disable();
+      this.countryFormV.get('maskaGus')?.disable();
       this.name = row.name;
       this.prefix = row.prefix;
       this.postMask = row.postMask;

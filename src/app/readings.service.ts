@@ -53,4 +53,8 @@ export class ReadingsService {
   getById(id:number){
     return this.http.get<readingsList>(`${environment.url}/api/v1/reading/getById?id=`+id)
   }
+
+  search(value: string) {
+    return this.http.get<readingsList>(`${environment.url}/api/v1/reading/search?data=`+value);
+  }
 }
