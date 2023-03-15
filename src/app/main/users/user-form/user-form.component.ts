@@ -5,7 +5,8 @@ import {MatTable, MatTableDataSource} from "@angular/material/table";
 import {ContractList} from "../../../contract.service";
 import {Subscription} from "rxjs";
 import {Roles, User, UserItem, UsersService} from "../../../service/users.service";
-import {MAT_DIALOG_DATA} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialog} from "@angular/material/dialog";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-user-form',
@@ -24,8 +25,10 @@ export class UserFormComponent implements OnInit {
   editMode:boolean = false;
   rola!: string;
   password!: string;
-  constructor( @Inject(MAT_DIALOG_DATA) data: {row:User,viewMode: boolean,editMode:boolean},private userService:UsersService) {
+  id!:string;
+  constructor( @Inject(MAT_DIALOG_DATA) data: {row:User,viewMode: boolean,editMode:boolean},private userService:UsersService, private toaster:ToastrService, private dialog:MatDialog) {
     if (data.editMode || data.viewMode){
+      this.id = data.row.id
       this.login = data.row.name;
       this.rola = data.row.role;
       this.viewMode = data.viewMode;
@@ -39,7 +42,9 @@ export class UserFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.addValue();
+    if (!this.editMode && !this.viewMode){
+      this.addValue();
+    }
   }
   addValue(){
     this.subcription = this.userService.getAllRoles().subscribe({
@@ -52,15 +57,43 @@ export class UserFormComponent implements OnInit {
   }
 
   save() {
-    this.userService.createUser(new UserItem(0,this.login,this.rola,this.password,this.dataSource._data._value)).subscribe(value => {
-      console.log(this.dataSource.value)
+    this.userService.createUser(new UserItem("",this.login,this.password,this.rola,this.dataSource._data._value)).subscribe(value => {
+      if (value.status == 200){
+        this.toaster.success("Pomyślnie utworzono użytkownika","Sukces", {
+          timeOut: 3000,
+          progressBar: true,
+          progressAnimation: "decreasing"})
+        this.dialog.closeAll();
+      }
     },error => {
-      console.log(this.dataSource._data._value)
+      this.toaster.error("Nie udało się utworzyć użytkownika, już istnieje o takiej nazwie","Błąd", {
+        timeOut: 3000,
+        progressBar: true,
+        progressAnimation: "decreasing"
+      })
     })
+  }
+
+  update(){
+    this.userService.upateUser(new UserItem(this.id,this.login,this.password,this.rola,this.dataSource._data._value)).subscribe(value => {
+      if (value.status == 200) {
+        this.toaster.success("Pomyślnie zaktulizowano użytkownika", "Sukces", {
+          timeOut: 3000,
+          progressBar: true,
+          progressAnimation: "decreasing"
+        })
+        this.dialog.closeAll();
+      }
+      },error => {
+        this.toaster.error("Nie udało się zaktulizować użytkownika","Błąd", {
+          timeOut: 3000,
+          progressBar: true,
+          progressAnimation: "decreasing"
+        })
+      })
   }
 
   updateActivation(row:Roles) {
     row.active = !row.active
-    console.log(this.dataSource._data._value)
   }
 }

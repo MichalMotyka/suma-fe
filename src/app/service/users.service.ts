@@ -19,7 +19,7 @@ export interface RolesList{
   rolesList:Roles[];
 }
 export class UserItem{
-  constructor(public id:number,public name:string,public password:string,public roleName:string,public role:Roles[]) {
+  constructor(public id:string,public name:string,public password:string,public roleName:string,public role:Roles[]) {
   }
 }
 
@@ -42,5 +42,8 @@ export class UsersService {
   }
   getActiveRoles(id:string){
     return this.http.get<RolesList>(`${environment.url}/api/v1/users/get_active_role?id=`+id)
+  }
+  upateUser(body:UserItem){
+    return this.http.patch<CountryCreateResponse>(`${environment.url}/api/v1/users/update`,body)
   }
 }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
 import {MatDialog} from "@angular/material/dialog";
 import {AdministratorComponent} from "../../administrator/administrator.component";
+import {UserControllerService} from "../../../user-controller.service";
 
 class MenuElements {
   name:string='';
@@ -27,7 +28,12 @@ export class SidebarComponent implements OnInit {
   new MenuElements("Taryfa","#"),
   new MenuElements("Cennik","#"),
   new MenuElements("Odczyty","#")];
-  constructor(private router:Router,private dialog:MatDialog) { }
+  name!:string
+  roleName!: string;
+  constructor(private router:Router,private dialog:MatDialog, userController:UserControllerService) {
+    this.name = userController.username
+    this.roleName = userController.roleName
+  }
 
   ngOnInit(): void {
   }

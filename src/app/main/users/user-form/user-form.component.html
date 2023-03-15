@@ -42,6 +42,7 @@
   </mat-paginator>
 </div>
 <div class="float-end mt-2">
-  <button class="btn btn-success m-1" (click)="save()">Zatwierdź</button>
+  <button class="btn btn-success m-1" (click)="save()" [hidden]="editMode">Zatwierdź</button>
+  <button class="btn btn-success m-1" (click)="update()" [hidden]="!editMode">Zatwierdź</button>
   <button class="btn btn-danger m-1" mat-dialog-close="kontrahent-form">Anuluj</button>
 </div>

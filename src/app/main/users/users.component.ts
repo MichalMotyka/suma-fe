@@ -46,7 +46,7 @@ export class UsersComponent implements OnInit {
 
 
   edit(row:any) {
-    this.dialog.open(UserFormComponent,{data:{row:row,viewMode:false,editMode:false}})
+    this.dialog.open(UserFormComponent,{data:{row:row,viewMode:false,editMode:true}})
   }
 
   view(row:any) {

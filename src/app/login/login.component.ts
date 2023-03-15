@@ -7,6 +7,8 @@ import {Router} from "@angular/router";
 import {CookieService} from "ngx-cookie-service";
 import {CountryCreateResponse} from "../main/administrator/country-list/country-form/country-form.component";
 import {map} from "rxjs/operators";
+import {UserControllerService} from "../user-controller.service";
+import {UserItem} from "../service/users.service";
 
 class User {
   constructor(
@@ -24,7 +26,7 @@ class User {
 export class LoginComponent implements OnInit {
   user: User = {login: "", password: ""}
 
-  constructor(private http: HttpClient, private dialogRef: MatDialog, private router: Router, private cookieService: CookieService) {
+  constructor(private http: HttpClient, private dialogRef: MatDialog, private router: Router, private cookieService: CookieService,private usercontroller:UserControllerService) {
   }
 
   ngOnInit(): void {
@@ -36,7 +38,8 @@ export class LoginComponent implements OnInit {
       let err = "Hasło lub login nie jest podane proszę sprawdzić dane logowania"
       this.dialogRef.open(InfoComponent,{data:{message:err}});
     } else {
-      this.http.post("http://localhost:8080/login", this.user).subscribe(value => {
+      this.http.post<UserItem>("http://localhost:8080/login", this.user).subscribe(value => {
+        this.usercontroller.setUserData(value);
         this.router.navigate(["/main"])
       }, (error: HttpErrorResponse) => {
         let err = "Hasło lub login nie jest prawidłowe"
