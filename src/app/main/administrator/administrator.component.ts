@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
+import {UserControllerService} from "../../user-controller.service";
 
 class Elements {
   name:string='';
@@ -16,14 +17,30 @@ class Elements {
   styleUrls: ['./administrator.component.css']
 })
 export class AdministratorComponent implements OnInit {
-  moduleElements: Elements[]=[new Elements("Adresy","adres_list"),new Elements("Kraje","country_list"),new Elements("Liczniki","meter_list"), new Elements("Użytkownicy","users")];
+  moduleElements: Elements[]=[new Elements("Adresy","adresList"),new Elements("Kraje","countryList"),new Elements("Liczniki","meterGet"), new Elements("Użytkownicy","usersGetAll")];
 
-  constructor(private router:Router) { }
+  constructor(private router:Router, private userController:UserControllerService) { }
 
   ngOnInit(): void {
   }
 
+  validatePermision(name: string) {
+    return this.userController.getRoleByName(name)?.active
+  }
+
   runModule(element:Elements) {
-    this.router.navigate(["main/"+element.routes])
+    if(element.name == 'Adresy'){
+      this.router.navigate(["main/adres_list"])
+    }
+    if(element.name == 'Kraje'){
+      this.router.navigate(["main/country_list"])
+    }
+    if(element.name == 'Liczniki'){
+      this.router.navigate(["main/meter_list"])
+    }
+    if(element.name == 'Użytkownicy'){
+      this.router.navigate(["main/users"])
+    }
+
   }
 }

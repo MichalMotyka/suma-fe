@@ -6,7 +6,7 @@
   <div class="text-center mb-5 noselect"><b>Rola</b> <br> {{roleName}}</div>
 </mat-nav-list>
 <mat-nav-list *ngFor="let element of elements">
-  <a mat-list-item (click)="runModule(element.name)">
+  <a mat-list-item (click)="runModule(element.name)" [hidden]="!validatePermision(element.rout)">
     <label [textContent]="element.name" class="m-auto text-center noselect"></label>
   </a>
 </mat-nav-list>

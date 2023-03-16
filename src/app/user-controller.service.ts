@@ -19,4 +19,10 @@ export class UserControllerService {
     this.roleName = user.roleName;
     this.roles = user.role;
   }
+
+  public getRoleByName(name:string){
+    return this.roles.find(value => value.name == name);
+  }
+
+
 }
