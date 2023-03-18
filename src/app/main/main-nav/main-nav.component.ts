@@ -26,7 +26,7 @@ export class MainNavComponent {
   constructor(private breakpointObserver: BreakpointObserver,private dialogRef: MatDialog,private http:HttpClient,private route:Router,private cookieService:CookieService) {}
 
   logout() {
-      this.http.get<CountryCreateResponse>(`${environment.url}/api/v1/logout`).subscribe(value => {
+      this.http.get<CountryCreateResponse>(`${environment.url}/api/logout`).subscribe(value => {
         this.route.navigate(["/"])
       })
   }
