@@ -5,7 +5,7 @@ import {CountryCreateResponse} from "../main/administrator/country-list/country-
 
 
 export class User{
-  constructor(public id:string,public name:string,public role:string) {
+  constructor(public id:string,public name:string,public role:string,public active:boolean) {
   }
 }
 export interface UserList{
@@ -45,5 +45,8 @@ export class UsersService {
   }
   upateUser(body:UserItem){
     return this.http.patch<CountryCreateResponse>(`${environment.url}/api/v1/users/update`,body)
+  }
+  delete(user:User){
+    return this.http.delete<CountryCreateResponse>(`${environment.url}/api/v1/users/delete?id=`+user.id)
   }
 }

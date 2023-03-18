@@ -65,6 +65,7 @@ import { ReadingsFormComponent } from './main/readings/readings-form/readings-fo
 import { ReadingsTableComponent } from './main/readings/readings-form/readings-table/readings-table.component';
 import { UsersComponent } from './main/users/users.component';
 import { UserFormComponent } from './main/users/user-form/user-form.component';
+import { ConfirmComponent } from './main/users/confirm/confirm.component';
 
 @NgModule({
   declarations: [
@@ -110,7 +111,8 @@ import { UserFormComponent } from './main/users/user-form/user-form.component';
     ReadingsFormComponent,
     ReadingsTableComponent,
     UsersComponent,
-    UserFormComponent
+    UserFormComponent,
+    ConfirmComponent
   ],
   imports: [
     BrowserModule,

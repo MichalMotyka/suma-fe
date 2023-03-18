@@ -42,7 +42,13 @@ export class LoginComponent implements OnInit {
         this.usercontroller.setUserData(value);
         this.router.navigate(["/main"])
       }, (error: HttpErrorResponse) => {
-        let err = "Hasło lub login nie jest prawidłowe"
+        let err;
+        if (error.status == 401){
+          err = "Hasło lub login nie jest prawidłowe"
+        }else if (error.status == 409){
+          err = "Konto zostało usunięte skontaktuj się z administratorem"
+        }
+
         this.dialogRef.open(InfoComponent,{data:{message:err}});
       })
     }

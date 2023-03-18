@@ -9,6 +9,8 @@ import {OtService} from "../../ot.service";
 import {MatDialog} from "@angular/material/dialog";
 import {User, UsersService} from "../../service/users.service";
 import {UserFormComponent} from "./user-form/user-form.component";
+import {ConfirmComponent} from "./confirm/confirm.component";
+import {UserControllerService} from "../../user-controller.service";
 
 @Component({
   selector: 'app-users',
@@ -23,7 +25,7 @@ export class UsersComponent implements OnInit {
   formModule: any = UserFormComponent;
   displayedColumns = ['id', 'name','actions'];
   private subcription!: Subscription;
-  constructor(private userService:UsersService,private dialog:MatDialog) {
+  constructor(private userService:UsersService,private dialog:MatDialog,private userComponent:UserControllerService) {
     dialog.afterAllClosed.subscribe(value => {
       this.subcription.unsubscribe;
       this.addValue()
@@ -54,6 +56,10 @@ export class UsersComponent implements OnInit {
   }
 
   remove(row:any) {
+    this.dialog.open(ConfirmComponent,{data:{row:row}})
+  }
 
+  validateUsername(name:String){
+    return this.userComponent.username === name;
   }
 }
