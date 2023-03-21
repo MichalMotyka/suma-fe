@@ -3,6 +3,7 @@ import {CountryCreateResponse} from "./main/administrator/country-list/country-f
 import {HttpClient} from "@angular/common/http";
 import {ToastrService} from "ngx-toastr";
 import {BehaviorSubject, Observable, Subscriber, Subscription} from "rxjs";
+import {environment} from "../environments/environment";
 
 
 export  interface  Countries{
@@ -86,5 +87,8 @@ export class CountryService {
   }
   getAllData(){
     return this.http.get<Countries>(this.url);
+  }
+  getByName(name:String){
+    return this.http.get<CountryItem>(`${environment.url}/api/v1/country/get?id=`+name)
   }
 }

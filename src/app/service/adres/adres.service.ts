@@ -15,8 +15,9 @@ export class Adres {
   active:string;
   post:string;
   post_code:string;
+  country:string;
 
-  constructor(id:number,name:string,GUS:string,type:string,active:string,post:string,post_code:string) {
+  constructor(id:number,name:string,GUS:string,type:string,active:string,post:string,post_code:string,country:string) {
   this.id = id;
   this.name = name;
   this.gus = GUS;
@@ -24,6 +25,7 @@ export class Adres {
   this.active = active;
   this.post = post;
   this.post_code = post_code;
+  this.country = country
   }
 }
 

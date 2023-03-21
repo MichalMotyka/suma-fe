@@ -13,8 +13,9 @@
   <span *ngIf="formGroup.get('gus')?.invalid && formGroup.get('gus')?.touched" style="color:red;" class="input-group flex-nowrap mb-2">Wartość pola gus nie może być pusta</span>
   <div class="input-group flex-nowrap mb-3">
     <span class="input-group-text">Kraj</span>
-    <input type="text" class="form-control" placeholder="Kraj" aria-label="Username" [disabled]="viewMode"
-           aria-describedby="addon-wrapping" formControlName="kraj">
+    <input class="typeahead-format" type="text" class="form-control"  placeholder="Kraj" aria-label="Username" (change)="setValidator()" [disabled]="viewMode"
+           aria-describedby="addon-wrapping" formControlName="kraj" [ngbTypeahead]="search"
+           [resultFormatter]="formatter">
   </div>
   <span *ngIf="formGroup.get('kraj')?.invalid && formGroup.get('kraj')?.touched" style="color:red;" class="input-group flex-nowrap mb-2">Wartość pola kraj nie może być pusta</span>
   <button class="btn btn-success me-3" [hidden]="viewMode" [disabled]="formGroup.invalid" (click)="create()">Zatwierdź</button>

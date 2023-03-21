@@ -3,6 +3,7 @@ import {ToastrService} from "ngx-toastr";
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {Adres, AdresService} from "../../../../../service/adres/adres.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {CountryService} from "../../../../../country.service";
 
 @Component({
   selector: 'app-adres-inside-form',
@@ -27,7 +28,7 @@ export class AdresInsideFormComponent implements OnInit {
      post_code: new FormControl('',[Validators.required,Validators.pattern('00-000')])
    })
 
-  constructor(@Inject(MAT_DIALOG_DATA) data: {adres: any,instance:any,rows:any,viewMode:boolean},private toaster:ToastrService,private dialog:MatDialogRef<any>,service:AdresService) {
+  constructor(@Inject(MAT_DIALOG_DATA) data: {adres: any,instance:any,rows:any,viewMode:boolean},private toaster:ToastrService,private dialog:MatDialogRef<any>,service:AdresService,private countryService:CountryService) {
     this.service = service;
     this.parent_gus = data.adres.gus;
     this.instance = data.instance;
@@ -50,7 +51,7 @@ export class AdresInsideFormComponent implements OnInit {
   }
 
   create() {
-    this.service.createState(new Adres(0,this.name,this.parent_gus.substring(0,2)+this.gus,this.type,"T",this.post,this.post_code)).subscribe(
+    this.service.createState(new Adres(0,this.name,this.parent_gus.substring(0,2)+this.gus,this.type,"T",this.post,this.post_code,"")).subscribe(
       value => {
         if (value.status == 201){
           this.toaster.success("Pomyślnie utworzono obiekt","Sukces",{
