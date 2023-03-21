@@ -57,4 +57,8 @@ export class AdresService {
   getAllNoStateAdresysHistoric(){
     return this.http.get<Adresys>("http://localhost:8080/api/v1/adres/get_all_no_state/historic");
   }
+
+  getRegexByGus(gus:string) {
+    return this.http.get<Adresys>("http://localhost:8080/api/v1/adres/getRegex?gus="+gus);
+  }
 }

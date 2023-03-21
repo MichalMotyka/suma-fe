@@ -7,8 +7,8 @@
   <span *ngIf="formGroup.get('name')?.invalid && formGroup.get('name')?.touched" class="input-group flex-nowrap mb-2" style="color:red;">Nazwa nie może być pusta</span>
   <div class="input-group flex-nowrap mb-3">
     <span class="input-group-text">GUS</span>
-    <input type="text" class="form-control" placeholder="00000" aria-label="Username" [(ngModel)]="gus" [maxLength]="5"
-           [disabled]="viewMode" [minLength]="5" aria-describedby="addon-wrapping" formControlName="gus">
+    <input type="text" class="form-control" placeholder="00000" aria-label="Username" (change)="validate()"
+           [disabled]="viewMode" aria-describedby="addon-wrapping" formControlName="gus">
   </div>
   <span *ngIf="formGroup.get('gus')?.invalid && formGroup.get('gus')?.touched" class="input-group flex-nowrap mb-2" style="color:red;">Gus nie może być pusta</span>
   <div class="input-group flex-nowrap mb-3">
@@ -28,7 +28,7 @@
     <input type="text" class="form-control" placeholder="00-000" [maxLength]="6" [minLength]="5" [(ngModel)]="post_code"
            [disabled]="viewMode" aria-label="Username" aria-describedby="addon-wrapping" formControlName="post_code">
   </div>
-  <span *ngIf="formGroup.get('post_code')?.invalid && formGroup.get('post_code')?.touched" class="input-group flex-nowrap mb-2" style="color:red;">Kod pczotowy nie może być pusty oraz musi być zgodna z formatem 00-000</span>
-  <button class="btn btn-success me-3" [disabled]="formGroup?.invalid"  [hidden]="viewMode" (click)="create()">Zatwierdź</button>
+  <span *ngIf="formGroup.get('post_code')?.invalid && formGroup.get('post_code')?.touched" class="input-group flex-nowrap mb-2" style="color:red;">Kod pczotowy nie może być pusty oraz musi być zgodna z formatem zdefiniowanym w kraju</span>
+  <button class="btn btn-success me-3" [disabled]="formGroup?.invalid || disable"  [hidden]="viewMode" (click)="create()">Zatwierdź</button>
   <button class="btn btn-danger" [matDialogClose]="this">Anuluj</button>
 </form>
