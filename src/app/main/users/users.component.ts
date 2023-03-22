@@ -11,6 +11,7 @@ import {User, UsersService} from "../../service/users.service";
 import {UserFormComponent} from "./user-form/user-form.component";
 import {ConfirmComponent} from "./confirm/confirm.component";
 import {UserControllerService} from "../../user-controller.service";
+import {SharedService} from "../utils/shared/shared.service";
 
 @Component({
   selector: 'app-users',
@@ -25,7 +26,19 @@ export class UsersComponent implements OnInit {
   formModule: any = UserFormComponent;
   displayedColumns = ['id', 'name','actions'];
   private subcription!: Subscription;
-  constructor(private userService:UsersService,private dialog:MatDialog,private userComponent:UserControllerService) {
+  private searchSub!: Subscription;
+  constructor(private userService:UsersService,private dialog:MatDialog,private userComponent:UserControllerService,private sharedService: SharedService) {
+    this.searchSub = this.sharedService.getClieckEvent().subscribe(value => {
+      if (value != '' && value != undefined) {
+        userService.search(value).subscribe(data => {
+          this.dataSource = new MatTableDataSource(data.userList);
+          this.dataSource.sort = this.sort;
+          this.dataSource.paginator = this.paginator;
+        })
+      }else {
+        this.addValue()
+      }
+    })
     dialog.afterAllClosed.subscribe(value => {
       this.subcription.unsubscribe;
       this.addValue()

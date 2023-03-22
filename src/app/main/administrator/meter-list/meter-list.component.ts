@@ -9,6 +9,7 @@ import {MeterService} from "../../../meter.service";
 import {MatDialog} from "@angular/material/dialog";
 import {MeterConfirmComponent} from "./meter-confirm/meter-confirm.component";
 import {Subscription} from "rxjs";
+import {SharedService} from "../../utils/shared/shared.service";
 
 @Component({
   selector: 'app-meter-list',
@@ -24,9 +25,20 @@ export class MeterListComponent implements OnInit {
   formModule:any = MeterFormComponent;
   subscrytpion!:Subscription
 
-
+  private searchSub!: Subscription;
   displayedColumns = ['id','name',"actions"];
-  constructor(private meterService:MeterService,private dialog:MatDialog) {
+  constructor(private meterService:MeterService,private dialog:MatDialog,private sharedService: SharedService) {
+    this.searchSub = this.sharedService.getClieckEvent().subscribe(value => {
+      if (value != '' && value != undefined) {
+        meterService.search(value).subscribe(data => {
+          this.dataSource = new MatTableDataSource(data.meterList);
+          this.dataSource.sort = this.sort;
+          this.dataSource.paginator = this.paginator;
+        })
+      }else {
+        this.addValue()
+      }
+    })
   }
 
   ngOnInit(): void {

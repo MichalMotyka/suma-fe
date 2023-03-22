@@ -30,7 +30,11 @@ export class TariffComponent implements OnInit {
     this.searchSub = this.sharedService.getClieckEvent().subscribe(value => {
       if (value != '' && value != undefined) {
         tariffService.search(value).subscribe(data => {
-          this.dataSource = new MatTableDataSource(data.tarifList);
+          let list = data.tarifList.filter((thing, i, arr) => {
+            // @ts-ignore
+            return arr.indexOf(arr.find(t => t.tarif_id === thing.tarif_id)) === i;
+          });
+          this.dataSource = new MatTableDataSource(list);
           this.dataSource.sort = this.sort;
           this.dataSource.paginator = this.paginator;
         })

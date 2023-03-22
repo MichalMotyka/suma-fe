@@ -49,4 +49,8 @@ export class UsersService {
   delete(user:User){
     return this.http.delete<CountryCreateResponse>(`${environment.url}/api/v1/users/delete?id=`+user.id)
   }
+
+  search(value: string) {
+    return this.http.get<UserList>(`${environment.url}/api/v1/users/search?name=`+value)
+  }
 }

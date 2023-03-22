@@ -38,4 +38,8 @@ export class MeterService {
   getByUid(uid:string){
     return this.http.get<Meter>(`${environment.url}/api/v1/meter/get_uid?uid=`+uid)
   }
+
+  search(value: string) {
+    return this.http.get<MeterList>(`${environment.url}/api/v1/meter/search?name=`+value)
+  }
 }

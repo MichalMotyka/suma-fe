@@ -91,4 +91,9 @@ export class CountryService {
   getByName(name:String){
     return this.http.get<CountryItem>(`${environment.url}/api/v1/country/get?id=`+name)
   }
+  search(name:String){
+    return this.http.get<Countries>(`${environment.url}/api/v1/country/search?name=`+name)
+  }
+
+
 }

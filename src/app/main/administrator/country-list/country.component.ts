@@ -7,6 +7,8 @@ import {MatDialog} from "@angular/material/dialog";
 import {CountryItem, CountryService} from "../../../country.service";
 import {CountryFormServiceService} from "../../../service/country-form-service.service";
 import {AdresRemoveComponent} from "../adres-list/adres-remove/adres-remove.component";
+import {Subscription} from "rxjs";
+import {SharedService} from "../../utils/shared/shared.service";
 
 @Component({
   selector: 'app-country-list',
@@ -25,8 +27,20 @@ export class CountryComponent implements  OnInit{
   displayedColumns = ['id', 'name','prefix','postMask','gusMask',"actions"];
   formModule:any = CountryFormComponent;
   adresRemove:any = AdresRemoveComponent;
-  constructor(private dialog:MatDialog,private country:CountryService,private countryForm:CountryFormServiceService) {
-      dialog.afterAllClosed.subscribe(value => {
+  private searchSub!: Subscription;
+  constructor(private dialog:MatDialog,private country:CountryService,private countryForm:CountryFormServiceService,private sharedService: SharedService) {
+    this.searchSub = this.sharedService.getClieckEvent().subscribe(value => {
+      if (value != '' && value != undefined) {
+        country.search(value).subscribe(data => {
+          this.dataSource = new MatTableDataSource(data.countries);
+          this.dataSource.sort = this.sort;
+          this.dataSource.paginator = this.paginator;
+        })
+      }else {
+        this.addValue()
+      }
+    })
+    dialog.afterAllClosed.subscribe(value => {
         this.test.unsubscribe;
         this.addValue()
       })
