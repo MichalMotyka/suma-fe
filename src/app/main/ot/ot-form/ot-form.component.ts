@@ -126,7 +126,6 @@ export class OtFormComponent implements OnInit {
     this.pp.forEach(pp=>{
       if (pp === this.ppModel){
         this.ppService.getById(this.ppModel).subscribe(value => {
-          console.log(value)
           if (value.contract === 0){
             this.contractService.getS1ByContractor(String(value.contractor)).subscribe(data=>{
               this.contract = data.uid;
@@ -142,7 +141,10 @@ export class OtFormComponent implements OnInit {
           this.contracotrService.getById(String(value.contractor)).subscribe(result =>{
             this.contractor = result.numerKlienta;
           })
-          this.meter = value.meter;
+          this.meterService.getById(String(value.meter)).subscribe(meters=>{
+            this.meter = meters.model;
+          })
+
         })
       }
     })
